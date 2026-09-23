@@ -6,3 +6,8 @@ orwell_dict = {
     "Coming Up for Air": 1939}
 orwell_dict["Animal Farm"]
 print(orwell_dict["Animal Farm"])
+print("Catalonia" in orwell_dict)
+orwell_dict["Homage to Catalonia"] = 1937
+print(orwell_dict)
+orwell_dict["Homage to Catalonia"] = 1938
+print(orwell_dict)
