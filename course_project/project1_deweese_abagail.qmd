@@ -1,0 +1,28 @@
+1. Dataset Description
+The dataset I will be using is William Shakespeare's 'Hamlet', edited by Charles Kean (Project gutenberg,1859). It is approximately 30,000 words snd consists of 17th century English but I am working with a republished and edited verion from the 19th century so their may be lingusitic variation in the text from the time period change. 
+I found this text on project gutenberg because I knew I wanted to use Hamlet and figured this was the easiest way to get a copy. Link: https://www.gutenberg.org/cache/epub/27761/pg27761.txt
+The format is already in plain text so I won't have to make adaptions to it thankfully. This is the other reason I used gutenberg
+
+2. Rationale
+I choose this dataset because I love the play Hamlet and I am fasinated with many diffrent aspects and many diffrent characters within the play. For this project, I am specifically focuesd on whether Shakespeare specific linguistic choices are a reflection of narrative intention or are merely a biproduct of place and cohesion. More simply, did shakespeare have narrative intention for his lingustic choices or did they just sound good? I can see it going either way honestly
+3. Type of Analysis
+I will most likely be using the Frequency & vocablulary section to analyze sentence structure and word choice to determine if a sentence is passive or active. I will be counting sentences for this project. Maybe closer to paragraphs it will depend on how sentences interact with one another. 
+4. Preliminary Questions
+    1. How often does Ophelia speak in a passive voice in Hamlet?
+    2. Does Ophelia's dialougue reflect her preception and presentation in the plot story of Hamlet? - I am genuinly unsure whether their will be a correlation or not because I know and apprectiate how detail oriented shakespearen dialouge both in context of the story and on a meta level but also I understand that alot of lines and dialouge were made up up not just by the man himself but his acting troop as well and I'm not sure if that writing process will result in that kind of layered meaning. I also wonder if this test will be impacted by the time period and if it will be a comminatlity that everyone speaks one way or another.
+    3. Does her speach style chage throughout the novel from mor active to more passive?
+    4. Does it change when she is talking to diffrent characters?
+For at least one question, say what you expect to find, and why.
+5. A Look at the Data
+The Project Gutenberg eBook of Hamlet
+    
+This eBook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever. You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this eBook or online
+at www.gutenberg.org. If you are not located in the United States,
+you will have to check the laws of the country where you are located
+before using this eBook.
+
+Title: Hamlet
+
