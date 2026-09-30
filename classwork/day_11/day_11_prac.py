@@ -1,5 +1,4 @@
 word = "pin"
-print(word[0])
 starts_p = word[0] == "p"
 starts_t = word[0] == "t"
 starts_k = word[0] == "k"

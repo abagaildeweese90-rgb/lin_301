@@ -1,0 +1,4 @@
+words = ["phoneme", "phrase", "morpheme", "reconstruction", "index"]
+
+for word in words:
+    print(f"The word {word} has {len(word)} letters.")
