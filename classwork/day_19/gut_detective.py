@@ -29,8 +29,6 @@ hamlet_text = "".join(hamlet_lines)
 
 print(hamlet_lines[-5:])
 
-hamlet_text = "".join(hamlet_lines)   # glue the lines back together into a string
-
 import re
 
 
@@ -51,3 +49,19 @@ types = len(set(text_split))
 
 ttr = types/tokens
 print(ttr)
+
+from collections import Counter
+import matplotlib.pyplot as plt
+
+book1_freqs = [pair[1] for pair in Counter(hamlet_words).most_common()]
+book1_ranks = range(1, len(book1_freqs) + 1)    # 1, 2, 3, ... up to the number of words
+
+plt.plot(book1_ranks, book1_freqs)
+plt.title("Rank vs. Frequency")
+plt.xlabel("Rank")
+plt.xscale("log")
+plt.yscale("log")
+plt.ylabel("Frequency")
+plt.show()
+
+
