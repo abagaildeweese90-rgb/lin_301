@@ -1,13 +1,4 @@
-# import urllib.request
-
-#url = "https://www.gutenberg.org/cache/epub/27761/pg27761.txt"  # Hamlet
-#filename = "../../data/gutenberg/hamlet.txt"
-
-#try:
-    #urllib.request.urlretrieve(url, filename)
-    #print("Downloaded:", filename)
-#except FileNotFoundError:
-   # print("Couldn't save the file — does the ../../data/gutenberg/ folder exist?")
+import urllib.request
 
 try:
     with open("../../data/gutenberg/hamlet.txt", "r", encoding="utf-8") as f:
@@ -130,25 +121,52 @@ hamlet_words = [w for w in hamlet_words if w != ""]
 emma_words = [w for w in emma_words if w != ""]
 
 ly_suffix = [w for w in hamlet_words if w.endswith("ly")]
-print(len(ly_suffix))
+print(len(ly_suffix)) #264
+
+rate = 264 / 35361 * 1000
+print(rate) #7.5 per 1000
 
 ly_suffix = [w for w in emma_words if w.endswith("ly")]
-print(len(ly_suffix))
+print(len(ly_suffix)) #2810
+
+rate = 2810 / 162095 * 1000
+print(rate) #17.3 per 1000
 
 ness_suffix = [w for w in hamlet_words if w.endswith("ness")]
-print(len(ness_suffix))
+print(len(ness_suffix)) #54
+
+rate = 54 / 35361 * 1000
+print(rate) #1.5 per 1000
+
 ness_suffix = [w for w in emma_words if w.endswith("ness")]
-print(len(ness_suffix))
+print(len(ness_suffix)) #482
+
+rate = 482 / 162095 * 1000
+print(rate) #2.97 per 1000
 
 ful_suffix = [w for w in hamlet_words if w.endswith("ful")]
-print(len(ful_suffix))
+print(len(ful_suffix)) #31
+
+rate = 31 / 35361 * 1000
+print(rate) #0.9 per 1000
+
 ful_suffix = [w for w in emma_words if w.endswith("ful")]
-print(len(ful_suffix))
+print(len(ful_suffix)) #257
+
+rate = 257 / 162095 * 1000
+print(rate) #1.6 per 1000
 
 ment_suffix = [w for w in hamlet_words if w.endswith("ment")]
-print(len(ment_suffix))
+print(len(ment_suffix)) #66
+
+rate = 66 / 35361 * 1000
+print(rate) #1.9 per 1000
+
 ment_suffix = [w for w in emma_words if w.endswith("ment")]
-print(len(ment_suffix))
+print(len(ment_suffix)) #529
+
+rate = 529 / 162095 * 1000
+print(rate) #3.3 per 1000
 
 hamlet_cleaned = [line.strip().lower() for line in hamlet_lines]
 emma_cleaned = [line.strip().lower() for line in emma_lines]
@@ -172,16 +190,23 @@ for item in hamlet_nonempty:
         quote_count += 1
         print(item, quote_count) #lines that start with quotes: 7
 
+rate = 7 / 4225 * 1000
+print(rate) #1.7 per 1000
+
 item_count = 0
 for item in emma_nonempty:
     item_count += 1
     print(item, item_count) # lines: 13857
+
 
 quote_count = 0
 for item in emma_nonempty:
     if item[0] == '"' or item[0] == '“' or item[0] == '‘':
         quote_count += 1
         print(item, quote_count) #lines that start with quotes: 1448
+
+rate = 1448 / 13857 * 1000
+print(rate) #104.5 per 1000
 
 # We skip ' because it's and apostrophe and would ruin the data
 

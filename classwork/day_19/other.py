@@ -1,60 +1,37 @@
-import urllib.request
+hamlet_cleaned = [line.strip().lower() for line in hamlet_lines]
+emma_cleaned = [line.strip().lower() for line in emma_lines]
 
-url = "https://www.gutenberg.org/cache/epub/158/pg158.txt"  # Emma
-filename = "../../data/gutenberg/emma.txt"
+hamlet_nonempty = [line for line in hamlet_cleaned if line != ""]
 
+print(len(hamlet_cleaned) - len(hamlet_nonempty), "empty lines removed")
 
+emma_nonempty = [line for line in emma_cleaned if line != ""]
 
-while not emma_lines[0].startswith("*** START"):
-    emma_lines = emma_lines[1:]     # chop off the first line
-emma_lines = emma_lines[1:]         # chop off the *** START line itself
+print(len(emma_cleaned) - len(emma_nonempty), "empty lines removed")
 
-print(emma_lines[0:5])
+item_count = 0
+for item in hamlet_nonempty:
+    item_count += 1
+    print(item, item_count) # lines: 4225
 
-while not emma_lines[-1].startswith("*** END"):
-    emma_lines = emma_lines[:-1]    # chop off the last line
-emma_lines = emma_lines[:-1]        # chop off the *** END line itself
+quote_count = 0
+for item in hamlet_nonempty:
+    if item[0] == '"' or item[0] == '“' or item[0] == '‘':
+        quote_count += 1
+        print(item, quote_count) #lines that start with quotes: 7
 
-emma_text = "".join(emma_lines)
+item_count = 0
+for item in emma_nonempty:
+    item_count += 1
+    print(item, item_count) # lines: 13857
 
-print(emma_lines[-5:])
+quote_count = 0
+for item in emma_nonempty:
+    if item[0] == '"' or item[0] == '“' or item[0] == '‘':
+        quote_count += 1
+        print(item, quote_count) #lines that start with quotes: 1448
 
-emma_text = "".join(emma_lines)   # glue the lines back together into a string
-
-import re
-
-emma_words = re.split(r"[\W]+", emma_text.lower())
-emma_words = [w for w in emma_words if w != ""]
-
-
-unique_words = set(emma_words)
-
-tokens = len(emma_words)         
-types = len(set(emma_words))  
-print(tokens)
-print(types)
-
-text_split = emma_text.split()
-
-
-ttr = types/tokens
-print(ttr)
-
-from collections import Counter
-import matplotlib.pyplot as plt
-
-book1_freqs = [pair[1] for pair in Counter(emma_words).most_common()]
-book1_ranks = range(1, len(book1_freqs) + 1)    # 1, 2, 3, ... up to the number of words
-
-plt.plot(book1_ranks, book1_freqs)
-plt.title("Rank vs. Frequency")
-plt.xlabel("Rank")
-plt.ylabel("Frequency")
-plt.show()
-
-# Skakespeare                                                Austin
-#plt.bar(hamlet_content_labels, hamlet_content_freqs)
-#plt.bar(emma_content_labels, emma_content_freqs)
+# We skip ' because it's and apostrophe and would ruin the data
 
 from collections import Counter
 
@@ -138,22 +115,3 @@ plt.show()
 
 
 
-
-quote_count = 0
-for item in hamlet_nonempty:
-    if item[0] == '"' or item[0] == '“' or item[0] == '‘':
-        quote_count += 1
-        print(item, quote_count) #lines that start with quotes: 7
-
-item_count = 0
-for item in emma_nonempty:
-    item_count += 1
-    print(item, item_count) # lines: 13857
-
-quote_count = 0
-for item in emma_nonempty:
-    if item[0] == '"' or item[0] == '“' or item[0] == '‘':
-        quote_count += 1
-        print(item, quote_count) #lines that start with quotes: 1448
-
-# We skip ' because it's and apostrophe and would ruin the data
