@@ -71,3 +71,109 @@ print(content["word"].value_counts().head(10))
 alice_df["chapter"].value_counts()
 alice_df["chapter"].value_counts().sort_index()
 ```
+```{python}
+ch1_content = alice_df[(alice_df["chapter"] == 1) & (~alice_df["word"].isin(stopwords))]
+print(ch1_content["word"].value_counts().head(5))
+```
+
+```{python}
+queen = alice_df[alice_df["word"] == "queen"]
+queen["chapter"].value_counts().sort_index()
+```
+
+#She first appears in chapter 8 of the story and then most likely takes over in chapter 9 because of how frequently the book refers to her in both of these chapters
+
+```{python}
+cat = alice_df[alice_df["word"] == "cat"]
+print(cat["chapter"].value_counts().sort_index())
+hatter = alice_df[alice_df["word"] == "hatter"]
+print(hatter["chapter"].value_counts().sort_index())
+ly = alice_df[alice_df["word"].str.endswith("ing")]
+print(ly["chapter"].value_counts().sort_index())
+```
+
+#1. Chapters 1, 2, 3, 6, 8
+#2. Chapters 6, 7, 11
+#3. 1: 67, 2:66 , 3: 60, 4: 96, 5: 64, 6: 90, 7: 83, 8: 101, 9: 63, 10: 60, 11: 68, 12: 101
+
+```{python}
+queen_by_chapter = {}
+
+for w, ch in zip(alice_df["word"], alice_df["chapter"]):
+    if w == "queen":
+        if ch in queen_by_chapter:
+            queen_by_chapter[ch] += 1
+        else:
+            queen_by_chapter[ch] = 1
+
+print(queen_by_chapter)
+```
+```{python}
+alice_df[alice_df["word"] == "queen"]["chapter"].value_counts().sort_index()
+```
+#Adds a column (length)
+```{python}
+alice_df["length"] = alice_df["word"].str.len()
+alice_df.head()
+```
+#Adds true or false column
+```{python}
+alice_df["is_ly"] = alice_df["word"].str.endswith("ly")
+alice_df["is_stopword"] = alice_df["word"].isin(stopwords)
+alice_df.head(10)
+```
+#Adds the same value to each row 
+```{python}
+alice_df["text"] = "alice"
+alice_df.head()
+```
+#type/token ratio
+```{python}
+tokens = len(alice_df)
+types = alice_df["word"].nunique()     # number of unique words
+
+print(tokens, types, types / tokens)
+```
+#.sort_values() sorts by column and .drop_duplicates() gets rid of duplicates
+```{python}
+alice_types = alice_df.drop_duplicates("word")
+alice_types.sort_values("length", ascending=False).head(10)
+```
+```{python}
+with open("../../data/gutenberg/mansfield_park.txt", "r", encoding="utf-8") as f:
+    mfp_lines = f.readlines()
+
+while not mfp_lines[0].startswith("*** START"):
+    mfp_lines = alice_lines[1:]
+mfp_lines = mfp_lines[1:]
+
+while not mfp_lines[-1].startswith("*** END"):
+    mfp_lines = mfp_lines[:-1]
+mfp_lines = mfp_lines[:-1]
+
+mfp_text = "".join(mfp_lines)
+```
+```{python}
+# 2. Split into chapters (and drop everything before Chapter I)
+chapters = re.split(r"\nCHAPTER [IVXL]+", mfp_text)
+chapters = chapters[1:]
+```
+```{python}
+# 3. One row per word, with its chapter
+rows = []
+chapter_num = 0
+
+for chapter in chapters:
+    chapter_num += 1
+    words = re.split(r"[\W_]+", chapter.lower())   # split on \W AND on _
+    words = [w for w in words if w != ""]
+    for w in words:
+        rows.append({"word": w, "chapter": chapter_num})
+
+mfp_df = pd.DataFrame(rows)
+```
+```{python}
+# 4. Save it for next time
+mfp_df.to_csv("mfp_words.csv", index=False, encoding="utf-8-sig")
+
+```
