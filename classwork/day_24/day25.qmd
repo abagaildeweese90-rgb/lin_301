@@ -9,7 +9,8 @@ jupyter: python3
 ```{python}
 import re
 import pandas as pd
-
+```
+```{python}
 # Stopwords (from Day 18)
 stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
              "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
@@ -19,7 +20,8 @@ stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
              "will", "any", "much", "than", "such", "their", "them", "if", "do",
              "did", "one", "when", "your", "more", "are", "we", "who", "up",
              "out", "down", "into", "s", "t"]
-
+```
+```{python}
 # 1. Load Alice and cut off the Gutenberg header and footer
 with open("../../data/gutenberg/alice.txt", "r", encoding="utf-8") as f:
     alice_lines = f.readlines()
@@ -33,11 +35,13 @@ while not alice_lines[-1].startswith("*** END"):
 alice_lines = alice_lines[:-1]
 
 alice_text = "".join(alice_lines)
-
+```
+```{python}
 # 2. Split into chapters (and drop everything before Chapter I)
 chapters = re.split(r"\nCHAPTER [IVXL]+", alice_text)
 chapters = chapters[1:]
-
+```
+```{python}
 # 3. One row per word, with its chapter
 rows = []
 chapter_num = 0
@@ -50,10 +54,10 @@ for chapter in chapters:
         rows.append({"word": w, "chapter": chapter_num})
 
 alice_df = pd.DataFrame(rows)
-
+```
+```{python}
 # 4. Save it for next time
 alice_df.to_csv("alice_words.csv", index=False, encoding="utf-8-sig")
-
 ```
 ```{python}
 print(len(alice_df))
@@ -141,39 +145,33 @@ alice_types.sort_values("length", ascending=False).head(10)
 ```
 ```{python}
 with open("../../data/gutenberg/mansfield_park.txt", "r", encoding="utf-8") as f:
-    mfp_lines = f.readlines()
+    mp_lines = f.readlines()
 
-while not mfp_lines[0].startswith("*** START"):
-    mfp_lines = alice_lines[1:]
-mfp_lines = mfp_lines[1:]
+while not mp_lines[0].startswith("*** START"):
+    mp_lines = mp_lines[1:]
+mp_lines = mp_lines[1:]
 
-while not mfp_lines[-1].startswith("*** END"):
-    mfp_lines = mfp_lines[:-1]
-mfp_lines = mfp_lines[:-1]
+while not mp_lines[-1].startswith("*** END"):
+    mp_lines = mp_lines[:-1]
+mp_lines = mp_lines[:-1]
 
-mfp_text = "".join(mfp_lines)
-```
-```{python}
-# 2. Split into chapters (and drop everything before Chapter I)
-chapters = re.split(r"\nCHAPTER [IVXL]+", mfp_text)
-chapters = chapters[1:]
-```
-```{python}
-# 3. One row per word, with its chapter
-rows = []
+mp_text = "".join(mp_lines)
+
+mp_chapters = re.split(r"\nCHAPTER [IVXL]+", mp_text)
+mp_chapters = mp_chapters[1:]
+
+mp_rows = []
 chapter_num = 0
 
-for chapter in chapters:
+for chapter in mp_chapters:
     chapter_num += 1
     words = re.split(r"[\W_]+", chapter.lower())   # split on \W AND on _
     words = [w for w in words if w != ""]
     for w in words:
-        rows.append({"word": w, "chapter": chapter_num})
+        mp_rows.append({"word": w, "chapter": chapter_num})
 
-mfp_df = pd.DataFrame(rows)
-```
-```{python}
-# 4. Save it for next time
-mfp_df.to_csv("mfp_words.csv", index=False, encoding="utf-8-sig")
+mp_df = pd.DataFrame(mp_rows)
 
+print(len(mp_df))
+print(mp_df["chapter"].nunique())
 ```

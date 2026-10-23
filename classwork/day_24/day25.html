@@ -107,63 +107,83 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="2bfe21f2" class="cell" data-execution_count="1">
+<div id="cc7718e8" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stopwords (from Day 18)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> [<span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"of"</span>, <span class="st">"a"</span>, <span class="st">"her"</span>, <span class="st">"i"</span>, <span class="st">"in"</span>, <span class="st">"was"</span>, <span class="st">"it"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"she"</span>, <span class="st">"he"</span>, <span class="st">"be"</span>, <span class="st">"that"</span>, <span class="st">"you"</span>, <span class="st">"not"</span>, <span class="st">"had"</span>, <span class="st">"as"</span>, <span class="st">"his"</span>, <span class="st">"for"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"with"</span>, <span class="st">"is"</span>, <span class="st">"have"</span>, <span class="st">"but"</span>, <span class="st">"at"</span>, <span class="st">"so"</span>, <span class="st">"all"</span>, <span class="st">"my"</span>, <span class="st">"been"</span>, <span class="st">"him"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"on"</span>, <span class="st">"by"</span>, <span class="st">"could"</span>, <span class="st">"would"</span>, <span class="st">"very"</span>, <span class="st">"no"</span>, <span class="st">"what"</span>, <span class="st">"which"</span>, <span class="st">"they"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"were"</span>, <span class="st">"there"</span>, <span class="st">"me"</span>, <span class="st">"an"</span>, <span class="st">"must"</span>, <span class="st">"this"</span>, <span class="st">"said"</span>, <span class="st">"from"</span>, <span class="st">"or"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"will"</span>, <span class="st">"any"</span>, <span class="st">"much"</span>, <span class="st">"than"</span>, <span class="st">"such"</span>, <span class="st">"their"</span>, <span class="st">"them"</span>, <span class="st">"if"</span>, <span class="st">"do"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"did"</span>, <span class="st">"one"</span>, <span class="st">"when"</span>, <span class="st">"your"</span>, <span class="st">"more"</span>, <span class="st">"are"</span>, <span class="st">"we"</span>, <span class="st">"who"</span>, <span class="st">"up"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">"out"</span>, <span class="st">"down"</span>, <span class="st">"into"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Load Alice and cut off the Gutenberg header and footer</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../data/gutenberg/alice.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> f.readlines()</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> alice_lines[<span class="dv">0</span>].startswith(<span class="st">"*** START"</span>):</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> alice_lines[<span class="dv">1</span>:]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alice_lines <span class="op">=</span> alice_lines[<span class="dv">1</span>:]</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> alice_lines[<span class="op">-</span><span class="dv">1</span>].startswith(<span class="st">"*** END"</span>):</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> alice_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>alice_lines <span class="op">=</span> alice_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>alice_text <span class="op">=</span> <span class="st">""</span>.join(alice_lines)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Split into chapters (and drop everything before Chapter I)</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>chapters <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\n</span><span class="vs">CHAPTER </span><span class="pp">[IVXL]</span><span class="op">+</span><span class="vs">"</span>, alice_text)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>chapters <span class="op">=</span> chapters[<span class="dv">1</span>:]</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. One row per word, with its chapter</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>chapter_num <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chapter <span class="kw">in</span> chapters:</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    chapter_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="dv">\W</span><span class="pp">_]</span><span class="op">+</span><span class="vs">"</span>, chapter.lower())   <span class="co"># split on \W AND on _</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="op">!=</span> <span class="st">""</span>]</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> words:</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"word"</span>: w, <span class="st">"chapter"</span>: chapter_num})</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>alice_df <span class="op">=</span> pd.DataFrame(rows)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Save it for next time</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>alice_df.to_csv(<span class="st">"alice_words.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="b1f351fb" class="cell" data-execution_count="2">
+<div id="d552d49b" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(alice_df))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alice_df[<span class="st">"chapter"</span>].nunique())</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alice_df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stopwords (from Day 18)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> [<span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"of"</span>, <span class="st">"a"</span>, <span class="st">"her"</span>, <span class="st">"i"</span>, <span class="st">"in"</span>, <span class="st">"was"</span>, <span class="st">"it"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"she"</span>, <span class="st">"he"</span>, <span class="st">"be"</span>, <span class="st">"that"</span>, <span class="st">"you"</span>, <span class="st">"not"</span>, <span class="st">"had"</span>, <span class="st">"as"</span>, <span class="st">"his"</span>, <span class="st">"for"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"with"</span>, <span class="st">"is"</span>, <span class="st">"have"</span>, <span class="st">"but"</span>, <span class="st">"at"</span>, <span class="st">"so"</span>, <span class="st">"all"</span>, <span class="st">"my"</span>, <span class="st">"been"</span>, <span class="st">"him"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"on"</span>, <span class="st">"by"</span>, <span class="st">"could"</span>, <span class="st">"would"</span>, <span class="st">"very"</span>, <span class="st">"no"</span>, <span class="st">"what"</span>, <span class="st">"which"</span>, <span class="st">"they"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"were"</span>, <span class="st">"there"</span>, <span class="st">"me"</span>, <span class="st">"an"</span>, <span class="st">"must"</span>, <span class="st">"this"</span>, <span class="st">"said"</span>, <span class="st">"from"</span>, <span class="st">"or"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"will"</span>, <span class="st">"any"</span>, <span class="st">"much"</span>, <span class="st">"than"</span>, <span class="st">"such"</span>, <span class="st">"their"</span>, <span class="st">"them"</span>, <span class="st">"if"</span>, <span class="st">"do"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"did"</span>, <span class="st">"one"</span>, <span class="st">"when"</span>, <span class="st">"your"</span>, <span class="st">"more"</span>, <span class="st">"are"</span>, <span class="st">"we"</span>, <span class="st">"who"</span>, <span class="st">"up"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"out"</span>, <span class="st">"down"</span>, <span class="st">"into"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="c671881d" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Load Alice and cut off the Gutenberg header and footer</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../data/gutenberg/alice.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> f.readlines()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> alice_lines[<span class="dv">0</span>].startswith(<span class="st">"*** START"</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> alice_lines[<span class="dv">1</span>:]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>alice_lines <span class="op">=</span> alice_lines[<span class="dv">1</span>:]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> alice_lines[<span class="op">-</span><span class="dv">1</span>].startswith(<span class="st">"*** END"</span>):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    alice_lines <span class="op">=</span> alice_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alice_lines <span class="op">=</span> alice_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>alice_text <span class="op">=</span> <span class="st">""</span>.join(alice_lines)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="8f05514b" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Split into chapters (and drop everything before Chapter I)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>chapters <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\n</span><span class="vs">CHAPTER </span><span class="pp">[IVXL]</span><span class="op">+</span><span class="vs">"</span>, alice_text)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>chapters <span class="op">=</span> chapters[<span class="dv">1</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="f9f7acdd" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. One row per word, with its chapter</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>chapter_num <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chapter <span class="kw">in</span> chapters:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    chapter_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="dv">\W</span><span class="pp">_]</span><span class="op">+</span><span class="vs">"</span>, chapter.lower())   <span class="co"># split on \W AND on _</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="op">!=</span> <span class="st">""</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> words:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"word"</span>: w, <span class="st">"chapter"</span>: chapter_num})</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>alice_df <span class="op">=</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="e7d4693a" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Save it for next time</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>alice_df.to_csv(<span class="st">"alice_words.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="3ddc6ac4" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(alice_df))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alice_df[<span class="st">"chapter"</span>].nunique())</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alice_df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>27312
@@ -176,12 +196,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 4   alice        1</code></pre>
 </div>
 </div>
-<div id="6911bb72" class="cell" data-execution_count="3">
+<div id="7dc79386" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"word"</span>].value_counts()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> alice_df[<span class="op">~</span>alice_df[<span class="st">"word"</span>].isin(stopwords)]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(content[<span class="st">"word"</span>].value_counts().head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"word"</span>].value_counts()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> alice_df[<span class="op">~</span>alice_df[<span class="st">"word"</span>].isin(stopwords)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(content[<span class="st">"word"</span>].value_counts().head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>word
@@ -198,13 +218,13 @@ queen       75
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="5673abdb" class="cell" data-execution_count="4">
+<div id="27fa9bb8" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"chapter"</span>].value_counts()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"chapter"</span>].value_counts()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>chapter
 1     2193
 2     2186
@@ -221,11 +241,11 @@ Name: count, dtype: int64</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="2f50444e" class="cell" data-execution_count="5">
+<div id="fa545df7" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ch1_content <span class="op">=</span> alice_df[(alice_df[<span class="st">"chapter"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (<span class="op">~</span>alice_df[<span class="st">"word"</span>].isin(stopwords))]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ch1_content[<span class="st">"word"</span>].value_counts().head(<span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ch1_content <span class="op">=</span> alice_df[(alice_df[<span class="st">"chapter"</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (<span class="op">~</span>alice_df[<span class="st">"word"</span>].isin(stopwords))]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ch1_content[<span class="st">"word"</span>].value_counts().head(<span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>word
@@ -237,13 +257,13 @@ think      11
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="a8c19e86" class="cell" data-execution_count="6">
+<div id="9e159edb" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>queen <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"queen"</span>]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>queen[<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>queen <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"queen"</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>queen[<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>chapter
 6      4
 7      2
@@ -254,17 +274,16 @@ Name: count, dtype: int64</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<section id="she-first-appears-in-chapter-8-of-the-story-and-then-most-likely-takes-over-in-chapter-9-because-of-how-frequently-the-book-refers-to-her-in-both-of-these-chapters" class="level1">
-<h1>She first appears in chapter 8 of the story and then most likely takes over in chapter 9 because of how frequently the book refers to her in both of these chapters</h1>
-<div id="5cf11a39" class="cell" data-execution_count="7">
+<p>#She first appears in chapter 8 of the story and then most likely takes over in chapter 9 because of how frequently the book refers to her in both of these chapters</p>
+<div id="e789fce1" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"cat"</span>]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cat[<span class="st">"chapter"</span>].value_counts().sort_index())</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>hatter <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"hatter"</span>]</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hatter[<span class="st">"chapter"</span>].value_counts().sort_index())</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ly <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.endswith(<span class="st">"ing"</span>)]</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ly[<span class="st">"chapter"</span>].value_counts().sort_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cat <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"cat"</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cat[<span class="st">"chapter"</span>].value_counts().sort_index())</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>hatter <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"hatter"</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hatter[<span class="st">"chapter"</span>].value_counts().sort_index())</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ly <span class="op">=</span> alice_df[alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.endswith(<span class="st">"ing"</span>)]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ly[<span class="st">"chapter"</span>].value_counts().sort_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>chapter
@@ -296,30 +315,30 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>#1. Chapters 1, 2, 3, 6, 8 #2. Chapters 6, 7, 11 #3. 1: 67, 2:66 , 3: 60, 4: 96, 5: 64, 6: 90, 7: 83, 8: 101, 9: 63, 10: 60, 11: 68, 12: 101</p>
-<div id="c3b5353b" class="cell" data-execution_count="8">
+<div id="70c868f6" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>queen_by_chapter <span class="op">=</span> {}</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w, ch <span class="kw">in</span> <span class="bu">zip</span>(alice_df[<span class="st">"word"</span>], alice_df[<span class="st">"chapter"</span>]):</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> w <span class="op">==</span> <span class="st">"queen"</span>:</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ch <span class="kw">in</span> queen_by_chapter:</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            queen_by_chapter[ch] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            queen_by_chapter[ch] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(queen_by_chapter)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>queen_by_chapter <span class="op">=</span> {}</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w, ch <span class="kw">in</span> <span class="bu">zip</span>(alice_df[<span class="st">"word"</span>], alice_df[<span class="st">"chapter"</span>]):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> w <span class="op">==</span> <span class="st">"queen"</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ch <span class="kw">in</span> queen_by_chapter:</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>            queen_by_chapter[ch] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            queen_by_chapter[ch] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(queen_by_chapter)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>{6: 4, 7: 2, 8: 36, 9: 14, 11: 9, 12: 10}</code></pre>
 </div>
 </div>
-<div id="171429d5" class="cell" data-execution_count="9">
+<div id="9f8c38b3" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"queen"</span>][<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>alice_df[alice_df[<span class="st">"word"</span>] <span class="op">==</span> <span class="st">"queen"</span>][<span class="st">"chapter"</span>].value_counts().sort_index()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>chapter
 6      4
 7      2
@@ -331,13 +350,13 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>#Adds a column (length)</p>
-<div id="90d9fcbb" class="cell" data-execution_count="10">
+<div id="81313eec" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"length"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>alice_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"length"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>alice_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
@@ -388,14 +407,14 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>#Adds true or false column</p>
-<div id="0f4d5d33" class="cell" data-execution_count="11">
+<div id="ea3b9cd4" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"is_ly"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.endswith(<span class="st">"ly"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"is_stopword"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].isin(stopwords)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>alice_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"is_ly"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].<span class="bu">str</span>.endswith(<span class="st">"ly"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"is_stopword"</span>] <span class="op">=</span> alice_df[<span class="st">"word"</span>].isin(stopwords)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>alice_df.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 
 
@@ -498,13 +517,13 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>#Adds the same value to each row</p>
-<div id="c055b0ce" class="cell" data-execution_count="12">
+<div id="cc5e2b6c" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"text"</span>] <span class="op">=</span> <span class="st">"alice"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>alice_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>alice_df[<span class="st">"text"</span>] <span class="op">=</span> <span class="st">"alice"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>alice_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
 
@@ -573,25 +592,26 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>#type/token ratio</p>
-<div id="6fb13aee" class="cell" data-execution_count="13">
+<div id="0940a25a" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> <span class="bu">len</span>(alice_df)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>types <span class="op">=</span> alice_df[<span class="st">"word"</span>].nunique()     <span class="co"># number of unique words</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens, types, types <span class="op">/</span> tokens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> <span class="bu">len</span>(alice_df)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>types <span class="op">=</span> alice_df[<span class="st">"word"</span>].nunique()     <span class="co"># number of unique words</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokens, types, types <span class="op">/</span> tokens)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>27312 2557 0.09362185120093731</code></pre>
 </div>
 </div>
-<div id="36ed8ef4" class="cell" data-execution_count="14">
+<p>#.sort_values() sorts by column and .drop_duplicates() gets rid of duplicates</p>
+<div id="4b2e1abf" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>alice_types <span class="op">=</span> alice_df.drop_duplicates(<span class="st">"word"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>alice_types.sort_values(<span class="st">"length"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>alice_types <span class="op">=</span> alice_df.drop_duplicates(<span class="st">"word"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>alice_types.sort_values(<span class="st">"length"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
@@ -704,7 +724,45 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-</section>
+<div id="bb92c6ce" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../data/gutenberg/mansfield_park.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    mp_lines <span class="op">=</span> f.readlines()</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> mp_lines[<span class="dv">0</span>].startswith(<span class="st">"*** START"</span>):</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    mp_lines <span class="op">=</span> mp_lines[<span class="dv">1</span>:]</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>mp_lines <span class="op">=</span> mp_lines[<span class="dv">1</span>:]</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> mp_lines[<span class="op">-</span><span class="dv">1</span>].startswith(<span class="st">"*** END"</span>):</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    mp_lines <span class="op">=</span> mp_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>mp_lines <span class="op">=</span> mp_lines[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>mp_text <span class="op">=</span> <span class="st">""</span>.join(mp_lines)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>mp_chapters <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\n</span><span class="vs">CHAPTER </span><span class="pp">[IVXL]</span><span class="op">+</span><span class="vs">"</span>, mp_text)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>mp_chapters <span class="op">=</span> mp_chapters[<span class="dv">1</span>:]</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>mp_rows <span class="op">=</span> []</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>chapter_num <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> chapter <span class="kw">in</span> mp_chapters:</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    chapter_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="dv">\W</span><span class="pp">_]</span><span class="op">+</span><span class="vs">"</span>, chapter.lower())   <span class="co"># split on \W AND on _</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="op">!=</span> <span class="st">""</span>]</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> words:</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>        mp_rows.append({<span class="st">"word"</span>: w, <span class="st">"chapter"</span>: chapter_num})</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>mp_df <span class="op">=</span> pd.DataFrame(mp_rows)</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(mp_df))</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mp_df[<span class="st">"chapter"</span>].nunique())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>161442
+48</code></pre>
+</div>
+</div>
 
 </main>
 <!-- /main column -->
