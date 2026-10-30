@@ -1,0 +1,99 @@
+```{python}
+acts = re.split(r"\nACT [IVXL]+", fin_text)
+acts = acts[1:]
+```
+```{python}
+# 3. One row per word, with its chapter
+rows = []
+act_num = 0
+
+for act in acts:
+    act_num += 1
+    lines = re.split(r"[\W_]+", act.lower())   # split on \W AND on _
+    lines = [l for l in lines if l != ""]
+    for l in lines:
+        rows.append({"line": l, "act": act_num})
+
+fin_df = pd.DataFrame(rows)
+```
+```{python}
+# 4. Save it for next time
+fin_df.to_csv("hw5_deweese_abagail.csv", index=False, encoding="utf-8-sig")
+```
+```{python}
+print(len(fin_df))
+print(fin_df["act"].nunique())
+print(fin_df.head())
+```
+```{python}
+fin_df["word"].value_counts()
+content = fin_df[~fin_df["word"].isin(stopwords)]
+print(content["word"].value_counts().head(10))
+```
+```{python}
+fin_df["chapter"].value_counts()
+fin_df["chapter"].value_counts().sort_index()
+```
+```{python}
+ch1_content = fin_df[(fin_df["chapter"] == 1) & (~fin_df["word"].isin(stopwords))]
+print(ch1_content["word"].value_counts().head(5))
+```
+
+```{python}
+queen = fin_df[fin_df["word"] == "queen"]
+queen["chapter"].value_counts().sort_index()
+```
+
+
+```{python}
+cat = fin_df[fin_df["word"] == "cat"]
+print(cat["chapter"].value_counts().sort_index())
+hatter = fin_df[fin_df["word"] == "hatter"]
+print(hatter["chapter"].value_counts().sort_index())
+ly = fin_df[fin_df["word"].str.endswith("ing")]
+print(ly["chapter"].value_counts().sort_index())
+```
+```{python}
+queen_by_chapter = {}
+
+for w, ch in zip(fin_df["word"], fin_df["chapter"]):
+    if w == "queen":
+        if ch in queen_by_chapter:
+            queen_by_chapter[ch] += 1
+        else:
+            queen_by_chapter[ch] = 1
+
+print(queen_by_chapter)
+```
+```{python}
+fin_df[fin_df["word"] == "queen"]["chapter"].value_counts().sort_index()
+```
+#Adds a column (length)
+```{python}
+fin_df["length"] = fin_df["word"].str.len()
+fin_df.head()
+```
+#Adds true or false column
+```{python}
+fin_df["is_ly"] = fin_df["word"].str.endswith("ly")
+fin_df["is_stopword"] = fin_df["word"].isin(stopwords)
+fin_df.head(10)
+```
+#Adds the same value to each row 
+```{python}
+fin_df["text"] = "alice"
+fin_df.head()
+```
+#type/token ratio
+```{python}
+tokens = len(alice_df)
+types = fin_df["word"].nunique()     # number of unique words
+
+print(tokens, types, types / tokens)
+```
+#.sort_values() sorts by column and .drop_duplicates() gets rid of duplicates
+```{python}
+fin_types = fin_df.drop_duplicates("word")
+fin_types.sort_values("length", ascending=False).head(10)
+```
+

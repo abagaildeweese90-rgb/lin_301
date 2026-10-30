@@ -1,0 +1,74 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"hw5\"\n",
+        "format:\n",
+        "  html:\n",
+        "    code-fold: true\n",
+        "jupyter: python3\n",
+        "---\n"
+      ],
+      "id": "a08b22c9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import re\n",
+        "import pandas as pd"
+      ],
+      "id": "901b1750",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "with open(\"../../homework/hw5/hw5_raw.txt\", \"r\", encoding=\"utf-8\") as f:\n",
+        "    fin_lines = f.readlines()\n",
+        "\n",
+        "while not fin_lines[0].startswith(\"*** START\"):\n",
+        "    fin_lines = fin_lines[1:]\n",
+        "fin_lines = fin_lines[1:]\n",
+        "\n",
+        "while not fin_lines[-1].startswith(\"*** END\"):\n",
+        "    fin_lines = fin_lines[:-1]\n",
+        "fin_lines = fin_lines[:-1]\n",
+        "\n",
+        "fin_text = \"\".join(fin_lines)\n",
+        "\n",
+        "print(fin_lines)\n",
+        "print(fin_text)"
+      ],
+      "id": "9dd11408",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "acts = re.split(r\"[+] [IVXL]+\", fin_text)\n",
+        "acts = acts[1:]"
+      ],
+      "id": "c45e1229",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.14/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
