@@ -1,18 +1,45 @@
+---
+title: "hw5"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+
 ```{python}
-acts = re.split(r"\nACT [IVXL]+", fin_text)
-acts = acts[1:]
+import re
+import pandas as pd
 ```
 ```{python}
-# 3. One row per word, with its chapter
+# Stopwords (from Day 18)
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t"]
+```
+```{python}
+with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
+    fin_lines = f.readlines()
+fin_text = "".join(fin_lines)
+```
+```{python}
+verses = re.split(r'\s*\[.*?\]\s*', fin_text)
+```
+```{python}
 rows = []
-act_num = 0
+verses_num = 0
 
-for act in acts:
-    act_num += 1
-    lines = re.split(r"[\W_]+", act.lower())   # split on \W AND on _
+for verse in verses:
+    verses_num += 1
+    lines = re.split(r"[\n]+", verse.lower())   # split on \W AND on _
     lines = [l for l in lines if l != ""]
     for l in lines:
-        rows.append({"line": l, "act": act_num})
+        rows.append({"line": l, "verses": verses_num})
 
 fin_df = pd.DataFrame(rows)
 ```
@@ -22,41 +49,39 @@ fin_df.to_csv("hw5_deweese_abagail.csv", index=False, encoding="utf-8-sig")
 ```
 ```{python}
 print(len(fin_df))
-print(fin_df["act"].nunique())
+print(fin_df["verses"].nunique())
 print(fin_df.head())
 ```
 ```{python}
-fin_df["word"].value_counts()
-content = fin_df[~fin_df["word"].isin(stopwords)]
-print(content["word"].value_counts().head(10))
+fin_df["line"].value_counts()
+content = fin_df[~fin_df["line"].isin(stopwords)]
+print(content["line"].value_counts().head(10))
 ```
 ```{python}
-fin_df["chapter"].value_counts()
-fin_df["chapter"].value_counts().sort_index()
+fin_df["verses"].value_counts()
+fin_df["verses"].value_counts().sort_index()
 ```
 ```{python}
-ch1_content = fin_df[(fin_df["chapter"] == 1) & (~fin_df["word"].isin(stopwords))]
-print(ch1_content["word"].value_counts().head(5))
-```
-
-```{python}
-queen = fin_df[fin_df["word"] == "queen"]
-queen["chapter"].value_counts().sort_index()
+ch1_content = fin_df[(fin_df["verses"] == 1) & (~fin_df["line"].isin(stopwords))]
+print(ch1_content["line"].value_counts().head(5))
 ```
 
-
 ```{python}
-cat = fin_df[fin_df["word"] == "cat"]
-print(cat["chapter"].value_counts().sort_index())
-hatter = fin_df[fin_df["word"] == "hatter"]
-print(hatter["chapter"].value_counts().sort_index())
-ly = fin_df[fin_df["word"].str.endswith("ing")]
-print(ly["chapter"].value_counts().sort_index())
+queen = fin_df[fin_df["line"] == "queen"]
+queen["verses"].value_counts().sort_index()
+```
+```{python}
+cat = fin_df[fin_df["line"] == "cat"]
+print(cat["verses"].value_counts().sort_index())
+hatter = fin_df[fin_df["line"] == "hatter"]
+print(hatter["verses"].value_counts().sort_index())
+ly = fin_df[fin_df["line"].str.endswith("ing")]
+print(ly["verses"].value_counts().sort_index())
 ```
 ```{python}
 queen_by_chapter = {}
 
-for w, ch in zip(fin_df["word"], fin_df["chapter"]):
+for w, ch in zip(fin_df["line"], fin_df["verses"]):
     if w == "queen":
         if ch in queen_by_chapter:
             queen_by_chapter[ch] += 1
@@ -66,16 +91,16 @@ for w, ch in zip(fin_df["word"], fin_df["chapter"]):
 print(queen_by_chapter)
 ```
 ```{python}
-fin_df[fin_df["word"] == "queen"]["chapter"].value_counts().sort_index()
+fin_df[fin_df["line"] == "queen"]["verses"].value_counts().sort_index()
 ```
 #Adds a column (length)
 ```{python}
-fin_df["length"] = fin_df["word"].str.len()
+fin_df["length"] = fin_df["line"].str.len()
 fin_df.head()
 ```
 #Adds true or false column
 ```{python}
-fin_df["is_ly"] = fin_df["word"].str.endswith("ly")
+fin_df["is_ly"] = fin_df["line"].str.endswith("ly")
 fin_df["is_stopword"] = fin_df["word"].isin(stopwords)
 fin_df.head(10)
 ```
@@ -86,14 +111,13 @@ fin_df.head()
 ```
 #type/token ratio
 ```{python}
-tokens = len(alice_df)
-types = fin_df["word"].nunique()     # number of unique words
+tokens = len(fin_df)
+types = fin_df["line"].nunique()     # number of unique words
 
 print(tokens, types, types / tokens)
 ```
 #.sort_values() sorts by column and .drop_duplicates() gets rid of duplicates
 ```{python}
-fin_types = fin_df.drop_duplicates("word")
+fin_types = fin_df.drop_duplicates("line")
 fin_types.sort_values("length", ascending=False).head(10)
 ```
-

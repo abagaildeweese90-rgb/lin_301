@@ -12,6 +12,17 @@ import re
 import pandas as pd
 ```
 ```{python}
+# Stopwords (from Day 18)
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t"]
+```
+```{python}
 with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
 fin_text = "".join(fin_lines)
