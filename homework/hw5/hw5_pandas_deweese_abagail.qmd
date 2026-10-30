@@ -1,5 +1,5 @@
 ---
-title: "hw5"
+title: "hw5_deweese_abagail"
 format:
   html:
     code-fold: true
@@ -29,6 +29,7 @@ fin_text = "".join(fin_lines)
 ```
 ```{python}
 verses = re.split(r'\s*\[.*?\]\s*', fin_text)
+verses = verses[1:]
 ```
 ```{python}
 rows = []
@@ -52,72 +53,7 @@ print(len(fin_df))
 print(fin_df["verses"].nunique())
 print(fin_df.head())
 ```
-```{python}
-fin_df["line"].value_counts()
-content = fin_df[~fin_df["line"].isin(stopwords)]
-print(content["line"].value_counts().head(10))
-```
-```{python}
-fin_df["verses"].value_counts()
-fin_df["verses"].value_counts().sort_index()
-```
-```{python}
-ch1_content = fin_df[(fin_df["verses"] == 1) & (~fin_df["line"].isin(stopwords))]
-print(ch1_content["line"].value_counts().head(5))
-```
 
-```{python}
-queen = fin_df[fin_df["line"] == "queen"]
-queen["verses"].value_counts().sort_index()
-```
-```{python}
-cat = fin_df[fin_df["line"] == "cat"]
-print(cat["verses"].value_counts().sort_index())
-hatter = fin_df[fin_df["line"] == "hatter"]
-print(hatter["verses"].value_counts().sort_index())
-ly = fin_df[fin_df["line"].str.endswith("ing")]
-print(ly["verses"].value_counts().sort_index())
-```
-```{python}
-queen_by_chapter = {}
 
-for w, ch in zip(fin_df["line"], fin_df["verses"]):
-    if w == "queen":
-        if ch in queen_by_chapter:
-            queen_by_chapter[ch] += 1
-        else:
-            queen_by_chapter[ch] = 1
 
-print(queen_by_chapter)
-```
-```{python}
-fin_df[fin_df["line"] == "queen"]["verses"].value_counts().sort_index()
-```
-#Adds a column (length)
-```{python}
-fin_df["length"] = fin_df["line"].str.len()
-fin_df.head()
-```
-#Adds true or false column
-```{python}
-fin_df["is_ly"] = fin_df["line"].str.endswith("ly")
-fin_df["is_stopword"] = fin_df["word"].isin(stopwords)
-fin_df.head(10)
-```
-#Adds the same value to each row 
-```{python}
-fin_df["text"] = "alice"
-fin_df.head()
-```
-#type/token ratio
-```{python}
-tokens = len(fin_df)
-types = fin_df["line"].nunique()     # number of unique words
 
-print(tokens, types, types / tokens)
-```
-#.sort_values() sorts by column and .drop_duplicates() gets rid of duplicates
-```{python}
-fin_types = fin_df.drop_duplicates("line")
-fin_types.sort_values("length", ascending=False).head(10)
-```
