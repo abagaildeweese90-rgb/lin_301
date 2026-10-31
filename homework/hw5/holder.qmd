@@ -29,6 +29,7 @@ fin_text = "".join(fin_lines)
 ```
 ```{python}
 verses = re.split(r'\s*\[.*?\]\s*', fin_text)
+verses = verses[1:]
 ```
 ```{python}
 rows = []

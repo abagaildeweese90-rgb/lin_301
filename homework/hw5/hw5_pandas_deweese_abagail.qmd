@@ -25,22 +25,27 @@ stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
 ```{python}
 with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
+
+while not fin_lines[-1].startswith("["):
+    fin_lines = fin_lines[:-1]
+fin_lines = fin_lines[:-1]
+
 fin_text = "".join(fin_lines)
 ```
 ```{python}
-verses = re.split(r'\s*\[.*?\]\s*', fin_text)
-verses = verses[1:]
+songs = re.split(r"\*[^*]*\*", fin_text)
 ```
+
 ```{python}
 rows = []
-verses_num = 0
+songs_num = 0
 
-for verse in verses:
-    verses_num += 1
-    lines = re.split(r"[\n]+", verse.lower())   # split on \W AND on _
+for song in songs:
+    songs_num += 1
+    lines = re.split(r"[\n]+", song.lower())   # split on \W AND on _
     lines = [l for l in lines if l != ""]
     for l in lines:
-        rows.append({"line": l, "verses": verses_num})
+        rows.append({"line": l, "songs": songs_num})
 
 fin_df = pd.DataFrame(rows)
 ```
@@ -50,7 +55,7 @@ fin_df.to_csv("hw5_deweese_abagail.csv", index=False, encoding="utf-8-sig")
 ```
 ```{python}
 print(len(fin_df))
-print(fin_df["verses"].nunique())
+print(fin_df["songs"].nunique())
 print(fin_df.head())
 ```
 
