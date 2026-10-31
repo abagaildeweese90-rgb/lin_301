@@ -25,15 +25,13 @@ stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
 ```{python}
 with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
+clean_text = "".join(fin_lines)
 
-while not fin_lines[-1].startswith("["):
-    fin_lines = fin_lines[:-1]
-fin_lines = fin_lines[:-1]
-
-fin_text = "".join(fin_lines)
+fin_text = re.sub(r'\[.*?\]', '', clean_text)
 ```
 ```{python}
 songs = re.split(r"\*[^*]*\*", fin_text)
+songs = songs[1:]
 ```
 
 ```{python}

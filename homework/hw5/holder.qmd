@@ -25,6 +25,10 @@ stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
 ```{python}
 with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
+
+
+clean_text = re.sub(r'\[.*?\]', '', fin_lines)
+
 fin_text = "".join(fin_lines)
 ```
 ```{python}
