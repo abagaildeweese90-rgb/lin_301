@@ -40,4 +40,47 @@ print(df)
 df.groupby("pos").size()
 df.groupby("lemma").size()
 
+alice_sp = book_to_spacy_df("alice.txt", "Alice", nlp)
+alice_sp.head()
+
+alice = book_to_df('alice.txt', "Alice")
+
+print(len(alice))
+print(len(alice_sp))
+
+alice_sp["is_ly"] = alice_sp["word"].str.endswith("ly")
+alice_sp[alice_sp["is_ly"]].groupby("pos").size().sort_values(ascending=False)
+
+not_adv = alice_sp[alice_sp["is_ly"] & (alice_sp["pos"] != "ADV")]
+not_adv.groupby("word").size().sort_values(ascending=False)
+
+adverbs = alice_sp[alice_sp["pos"] == "ADV"]
+adverbs.groupby("lemma").size().sort_values(ascending=False).head(10)
+
+content = alice_sp[~alice_sp["is_stop"]]
+content.groupby("lemma").size().sort_values(ascending=False).head(10)
+
+alice_sp.head()
+
+alice_sp.loc[[2, 3], "pos"] = "NOUN"
+alice_sp.head()
+
+rabbits = alice_sp[alice_sp["word"] == "rabbit"]
+rabbits.groupby("pos").size()
+
+
+mfp_sp = book_to_spacy_df("mansfield_park.txt", "Mansfield Park", nlp)
+alice_sp = add_columns(alice_sp, stopwords)   
+mfp_sp = add_columns(mfp_sp, stopwords)
+
+alice_sp["is_adv"] = alice_sp["pos"] == "ADV"
+mfp_sp["is_adv"] = mfp_sp["pos"] == "ADV"
+
+print(alice_sp["is_adv"].mean() * 1000)
+print(alice_sp["is_ly"].mean() * 1000)
+print(mfp_sp["is_adv"].mean() * 1000)
+print(mfp_sp["is_ly"].mean() * 1000)
+
+
+
 
