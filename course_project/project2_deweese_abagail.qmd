@@ -20,7 +20,8 @@ hamlet_lines = hamlet_lines[1:]
 
 while not hamlet_lines[-1].startswith("*** END"):
     hamlet_lines = hamlet_lines[:-1]
-hamlet_text = "".join(hamlet_lines)
+clean_text = "".join(hamlet_lines)
+hamlet_text = re.sub(r'",', '', clean_text)
 ```
 ```{python}
 scenes = re.split(r"\nSCENE [IVXL]+", hamlet_text)
