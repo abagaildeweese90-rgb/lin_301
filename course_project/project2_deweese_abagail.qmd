@@ -1,0 +1,56 @@
+---
+title: "project2_deweese_abagail"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+```{python}
+import re
+import pandas as pd
+```
+```{python}
+with open("hamlet.txt", "r", encoding="utf-8") as f:
+    hamlet_lines = f.readlines()
+
+while not hamlet_lines[0].startswith("*** START"):
+    hamlet_lines = hamlet_lines[1:]
+hamlet_lines = hamlet_lines[1:]
+
+while not hamlet_lines[-1].startswith("*** END"):
+    hamlet_lines = hamlet_lines[:-1]
+hamlet_text = "".join(hamlet_lines)
+```
+```{python}
+scenes = re.split(r"\nSCENE [IVXL]+", hamlet_text)
+scenes = scenes[1:]
+```
+```{python}
+rows = []
+scene_num = 0
+
+for scene in scenes:
+    scene_num += 1
+    lines = re.split(r"_", scene.lower().strip()) 
+    lines = [l for l in lines if l != ""]
+    for l in lines:
+        rows.append({"lines": l, "scene": scene_num})
+
+hamlet_df = pd.DataFrame(rows)
+```
+```{python}
+# 4. Save it for next time
+hamlet_df.to_csv("project2_deweese_abagail.csv", index=False, encoding="utf-8-sig")
+```
+```{python}
+print(len(hamlet_df))
+print(hamlet_df["scene"].nunique())
+print(hamlet_df.head())
+print(hamlet_df.tail())
+```
+Write-Up
+Charles Kean in 1854 taken from Project Gutenberg. Link: https://www.gutenberg.org/cache/epub/27761/pg27761.txt. I did not edit any of the data I am using from part one to part two but during the next step there is a chance I narrow down my focus on certain acts and scenes in the play that highlight the character Ophelia because spoiler alert she dies before act 5. and there are many scenes that she is not in. What I did to clean the document is I cut off the header and footer, I split the document into scenes from the play, I did this instead of acts because I thought it would add more specificity when analyzing the text. Then I created my data frame where I split the document into rows which represents  two columns so far. One is the line of dialogue that is spoken including who is saying and or a stage direction. The second column is the scene number the line resides in. I will most likely add more columns later but for now it's helpful. Under this framework there are 4288 rows within hamlet_df. Then I turned it all lower case and removed empty strings. The way I split the rows will be very helpful for searching for full sections of passive versus active dialogue and assigning it to specific characters but there are a few instances throughout the play where _ which is how I more specifically split the lines is used within a line which means it splits one line of dialogue into two but I still think the good outweighs the bad. The problem left in my data is the decision of whether to keep the stage direction or not because at the moment I don’t know if later in my data collection I will need more context two lines of dialogue and whether the stage direction will be helpful. I think most likely what I’ll do is either cut it or at least add a column that designates who is saying each line and for the stage direction I will label it as such. There is nothing I regret cutting at the moment and I am more concerned about how much I kept but also I’m a hoarder by nature so this should be expected I guess.
+
+
+
