@@ -97,3 +97,25 @@ def book_to_spacy_df(filename, label, nlp):
     df = pd.DataFrame(rows)
     df["text"] = label
     return df
+
+def book_to_svo_df(filename, label, nlp):
+    text = load_text(filename)
+    chapters = re.split(r"(?im)^CHAPTER\s+(?:[IVXLCDM]+|\d+)\b", text)
+    chapters = chapters[1:]
+    rows = []
+    chapter_num = 0
+    for chapter in chapters:
+        chapter_num += 1
+        doc = nlp(chapter)
+        for token in doc:
+            if token.pos_ == "VERB":
+                subjects = [c for c in token.children if c.dep_ == "nsubj"]
+                objects = [c for c in token.children if c.dep_ == "dobj"]
+                if subjects and objects:
+                    rows.append({"subject": subjects[0].lemma_.lower(),
+                                 "verb": token.lemma_.lower(),
+                                 "object": objects[0].lemma_.lower(),
+                                 "chapter": chapter_num})
+    df = pd.DataFrame(rows)
+    df["text"] = label
+    return df
