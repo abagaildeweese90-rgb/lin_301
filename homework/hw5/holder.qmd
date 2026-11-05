@@ -126,3 +126,7 @@ print(tokens, types, types / tokens)
 fin_types = fin_df.drop_duplicates("line")
 fin_types.sort_values("length", ascending=False).head(10)
 ```
+```{python}
+verses = re.split(r'\[.*?\]', clean_text)
+verses = verses[1:]
+```
