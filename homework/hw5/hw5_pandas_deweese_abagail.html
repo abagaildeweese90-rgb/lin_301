@@ -107,14 +107,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="27113745" class="cell" data-execution_count="1">
+<div id="999daf15" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="ca3999d4" class="cell" data-execution_count="2">
+<div id="f7a101e3" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stopwords (from Day 18)</span></span>
@@ -128,66 +128,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"out"</span>, <span class="st">"down"</span>, <span class="st">"into"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="4a0fb700" class="cell" data-execution_count="3">
+<div id="ebcf8ccc" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../homework/hw5/hw5_raw.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    fin_lines <span class="op">=</span> f.readlines()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>clean_text <span class="op">=</span> <span class="st">""</span>.join(fin_lines)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fin_text <span class="op">=</span> <span class="st">""</span>.join(fin_lines)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>clean_text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\[</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\]</span><span class="vs">'</span>, <span class="st">''</span>, fin_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="3a01fb4a" class="cell" data-execution_count="4">
+<div id="e5379538" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\*</span><span class="pp">[^*]</span><span class="op">*</span><span class="ch">\*</span><span class="vs">"</span>, clean_text)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> songs[<span class="dv">1</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="dbea27a3" class="cell" data-execution_count="5">
+<div id="d36e5802" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>verses <span class="op">=</span> re.split(<span class="vs">r'</span><span class="ch">\[</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\]</span><span class="vs">'</span>, clean_text)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>verses <span class="op">=</span> verses[<span class="dv">1</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>songs_num <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>title_search <span class="op">=</span> re.search(<span class="vs">r"</span><span class="dv">^\s</span><span class="op">*</span><span class="kw">(</span><span class="pp">[^</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="kw">)</span><span class="vs">"</span>, fin_text)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> song <span class="kw">in</span> songs:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    songs_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="vs">"</span>, song.lower()) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> [l <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">if</span> l <span class="op">!=</span> <span class="st">""</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"Line"</span>: l, <span class="st">"Songs"</span>: songs_num})</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> title_search:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> title_search.group(<span class="dv">1</span>).strip()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="ss">f"Song </span><span class="sc">{</span>songs_num<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"Line"</span>: l, <span class="st">"Songs"</span>: songs_num, <span class="st">"Title"</span>: title})</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fin_df <span class="op">=</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="7ccbdae0" class="cell" data-execution_count="6">
+<div id="8d6f414b" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>songs_num <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> song <span class="kw">in</span> songs:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    songs_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    verses_num <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> verse <span class="kw">in</span> verses:</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        verses_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="vs">"</span>, song.lower()) </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> [l <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">if</span> l <span class="op">!=</span> <span class="st">""</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"line"</span>: l, <span class="st">"songs"</span>: songs_num, <span class="st">"verses"</span>: verses_num})</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>fin_df <span class="op">=</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'Length'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'has_love'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.contains(<span class="st">'love'</span>).astype(<span class="bu">bool</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">"Singer"</span>] <span class="op">=</span> <span class="st">"Finneas"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="dd43c55d" class="cell" data-execution_count="7">
+<div id="113ad29a" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> fin_df[<span class="st">"length"</span>] <span class="op">=</span> fin_df[<span class="st">"line"</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="02bb3550" class="cell" data-execution_count="8">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Save it for next time</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fin_df.to_csv(<span class="st">"hw5_deweese_abagail.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>check <span class="op">=</span> pd.read_csv(<span class="st">"hw5_deweese_abagail.csv"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(fin_df), <span class="bu">len</span>(check))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>check.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fin_df.to_csv(<span class="st">"hw5_deweese_abagail.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>check <span class="op">=</span> pd.read_csv(<span class="st">"hw5_deweese_abagail.csv"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(fin_df), <span class="bu">len</span>(check))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>check.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>201 201</code></pre>
+<pre><code>166 166</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -195,82 +196,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">line</th>
-<th data-quarto-table-cell-role="th">songs</th>
-<th data-quarto-table-cell-role="th">verses</th>
-<th data-quarto-table-cell-role="th">length</th>
+<th data-quarto-table-cell-role="th">Line</th>
+<th data-quarto-table-cell-role="th">Songs</th>
+<th data-quarto-table-cell-role="th">Length</th>
+<th data-quarto-table-cell-role="th">has_love</th>
+<th data-quarto-table-cell-role="th">Singer</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>[intro: kacey musgraves]</td>
+<td>one, two</td>
 <td>1</td>
-<td>35</td>
-<td>24</td>
+<td>2</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>one, two</td>
+<td>sundown and i'm lonely in this house</td>
 <td>1</td>
-<td>35</td>
-<td>8</td>
+<td>7</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>[verse 1: kacey musgraves]</td>
+<td>it's feeling one-dimensional to me</td>
 <td>1</td>
-<td>35</td>
-<td>26</td>
+<td>5</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>sundown and i'm lonely in this house</td>
+<td>we've been tryin' hard to figure out</td>
 <td>1</td>
-<td>35</td>
-<td>36</td>
+<td>7</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>it's feeling one-dimensional to me</td>
+<td>give and take and how to be</td>
 <td>1</td>
-<td>35</td>
-<td>34</td>
+<td>7</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
-<td>we've been tryin' hard to figure out</td>
+<td>and don't you see</td>
 <td>1</td>
-<td>35</td>
-<td>36</td>
+<td>4</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
-<td>give and take and how to be</td>
+<td>that i would give you everything that you wanted?</td>
 <td>1</td>
-<td>35</td>
-<td>27</td>
+<td>9</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
-<td>and don't you see</td>
+<td>and i would never ask for any of it back</td>
 <td>1</td>
-<td>35</td>
-<td>17</td>
+<td>10</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
-<td>[chorus: kacey musgraves &amp; finneas, kacey musg...</td>
+<td>and if i could take only as much as i needed</td>
 <td>1</td>
-<td>35</td>
-<td>52</td>
+<td>11</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
-<td>that i would give you everything that you wanted?</td>
+<td>i would take everything you had</td>
 <td>1</td>
-<td>35</td>
-<td>49</td>
+<td>6</td>
+<td>False</td>
+<td>Finneas</td>
 </tr>
 </tbody>
 </table>

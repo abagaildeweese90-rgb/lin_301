@@ -25,39 +25,43 @@ stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
 ```{python}
 with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
-clean_text = "".join(fin_lines)
-fin_text = re.sub(r'\[.*?\]', '', clean_text)
+fin_text = "".join(fin_lines)
+clean_text = re.sub(r'\[.*?\]', '', fin_text)
 ```
 ```{python}
-songs = re.split(r"\*[^*]*\*", fin_text)
+songs = re.split(r"\*[^*]*\*", clean_text)
 songs = songs[1:]
-```
-```{python}
-verses = re.split(r'\[.*?\]', clean_text)
-verses = verses[1:]
 ```
 ```{python}
 rows = []
 songs_num = 0
+title_search = re.search(r"^\s*([^\n]+)", fin_text)
 
 for song in songs:
     songs_num += 1
-    verses_num = 0
-    for verse in verses:
-        verses_num += 1
     lines = re.split(r"[\n]+", song.lower()) 
     lines = [l for l in lines if l != ""]
     for l in lines:
-        rows.append({"line": l, "songs": songs_num, "verses": verses_num})
+        rows.append({"Line": l, "Songs": songs_num})
+
+if title_search:
+    title = title_search.group(1).strip()
+else:
+    title = f"Song {songs_num}"
+    for t in title_search:
+        rows.append({"Line": l, "Songs": songs_num, "Title": title})
+
 
 fin_df = pd.DataFrame(rows)
 ```
 ```{python}
-length = fin_df["length"] = fin_df["line"].str.len()
+fin_df['Length'] = fin_df['Line'].str.split().str.len()
+fin_df['has_love'] = fin_df['Line'].str.contains('love').astype(bool)
+fin_df["Singer"] = "Finneas"
+
 ```
 
 ```{python}
-# 4. Save it for next time
 fin_df.to_csv("hw5_deweese_abagail.csv", index=False, encoding="utf-8-sig")
 check = pd.read_csv("hw5_deweese_abagail.csv")
 print(len(fin_df), len(check))
