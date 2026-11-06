@@ -11,31 +11,22 @@ jupyter: python3
 import re
 import pandas as pd
 ```
+This is me importing the re package and the pandas package because I will use it later.
 ```{python}
-# Stopwords (from Day 18)
-stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
-             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
-             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
-             "on", "by", "could", "would", "very", "no", "what", "which", "they",
-             "were", "there", "me", "an", "must", "this", "said", "from", "or",
-             "will", "any", "much", "than", "such", "their", "them", "if", "do",
-             "did", "one", "when", "your", "more", "are", "we", "who", "up",
-             "out", "down", "into", "s", "t"]
-```
-```{python}
-with open("../../homework/hw5/hw5_raw.txt", "r", encoding="utf-8") as f:
+with open("hw5_raw.txt", "r", encoding="utf-8") as f:
     fin_lines = f.readlines()
 fin_text = "".join(fin_lines)
 clean_text = re.sub(r'\[.*?\]', '', fin_text)
 ```
+This is me first opening my text file and reading it in to the qmd. I don't have to path it because the txt file and this are in the same folder. I then joined lines together to make a string instead of a list. Then I cleaned out all of the brackets and the text within the brackets. I did google how to do get rid of brackets and whats inside and it suggested re.sub. So I adopted it and it reads variable (clean_text) equals re.sub, which substitutes something in your txt file for something else. Then in () you put first what your trying to get rid of, in this case it's brackets and whats inside, then you put in quotes what will replace it so in this case it is empty, then you put the file or variable that you are doing this to so the previously joined fin_text above. And that is how you re.sub.
 ```{python}
 songs = re.split(r"\*[^*]*\*", clean_text)
 songs = songs[1:]
 ```
+This is me splitting the text by songs because there are 5 songs within the file. I used re.split and this is the suggested method. I did have to google how to label what is within astricks and suggested the code above and then again you identify where you are doing this splitting to. Then you start doing this at 1 (which is techincally 2 but thats python for you) and read from there because whats in 0 is not content.
 ```{python}
 rows = []
 songs_num = 0
-title_search = re.search(r"^\s*([^\n]+)", fin_text)
 
 for song in songs:
     songs_num += 1
@@ -44,30 +35,25 @@ for song in songs:
     for l in lines:
         rows.append({"Line": l, "Songs": songs_num})
 
-if title_search:
-    title = title_search.group(1).strip()
-else:
-    title = f"Song {songs_num}"
-    for t in title_search:
-        rows.append({"Line": l, "Songs": songs_num, "Title": title})
-
-
 fin_df = pd.DataFrame(rows)
 ```
+This is creating a data frame. First you start rows which will be where all of your columns and data live. Then you create songs_num = 0 which invokes the songs variable from above. Then you create a for loop where for each new song in songs or where the text splits you add one to song_num. Then you define lines, which is where you split the code per row by line in python not by word, and then you use .lower to make it all lowercase. Then you delete all empty lines by defining lines as any line that is not blank. Then you use rows.append which creates your intial columns and what will be inside them. Then you create your data frame with panda.
 ```{python}
 fin_df['Length'] = fin_df['Line'].str.split().str.len()
 fin_df['has_love'] = fin_df['Line'].str.contains('love').astype(bool)
 fin_df["Singer"] = "Finneas"
-
 ```
-
+This is creating more columns for your data frame external to the intial text. So the first one finds the number of words in each line by going into lines in fin_df and spliting that string because line creates its own string and indexing the variables. The next one finds whether a line has the word love in it by checking if a string contains the word love and producing a boolin value (true or false) based on the outcome. I did gogle how to do this one but I believe that we have covered each part of this line in class it just suggested i string them together. Then i created a constant variable which is all of these songs were sung by Finease so I created a column and defined it as singer and then just labeled it Finneas.
 ```{python}
 fin_df.to_csv("hw5_deweese_abagail.csv", index=False, encoding="utf-8-sig")
 check = pd.read_csv("hw5_deweese_abagail.csv")
-print(len(fin_df), len(check))
+print(len(check))
 check.head(10)
 ```
+This creates an actual table and a file type called csv. that renders this code. Then check allows panda to read the file into qmd. Then it prints the total number of rows. Then I make the table only read the first 10 rows by using .head.
 
+Reflection:
+One row of my df is a line of the text file, which number song the line comes from (1 - 5), the # of words in the line, whether the line has the word love in it, and who sings the song. I threw out the labels of parts of the song, the titles, and the enpty lines because all I wanted was the content in the songs. The most interesting part of this was that on the coding side you have to be very specific about if somethings a .str and from the data I found intresting how little the word love is in these songs because for the most part these are love songs. And to address the elephant in the room I know there are only two columns from the text instead of three. I have been stuck on this for a week and a half now and I feel I just need to submit this assignment get feedback and keep working on it. I will figure this out but the code is obstinant. I'm sorry about this.
 
 
 

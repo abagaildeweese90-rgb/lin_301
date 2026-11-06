@@ -107,88 +107,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="999daf15" class="cell" data-execution_count="1">
+<div id="693d7fbf" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="f7a101e3" class="cell" data-execution_count="2">
+<p>This is me importing the re package and the pandas package because I will use it later.</p>
+<div id="f741be7e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stopwords (from Day 18)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> [<span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"of"</span>, <span class="st">"a"</span>, <span class="st">"her"</span>, <span class="st">"i"</span>, <span class="st">"in"</span>, <span class="st">"was"</span>, <span class="st">"it"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"she"</span>, <span class="st">"he"</span>, <span class="st">"be"</span>, <span class="st">"that"</span>, <span class="st">"you"</span>, <span class="st">"not"</span>, <span class="st">"had"</span>, <span class="st">"as"</span>, <span class="st">"his"</span>, <span class="st">"for"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"with"</span>, <span class="st">"is"</span>, <span class="st">"have"</span>, <span class="st">"but"</span>, <span class="st">"at"</span>, <span class="st">"so"</span>, <span class="st">"all"</span>, <span class="st">"my"</span>, <span class="st">"been"</span>, <span class="st">"him"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"on"</span>, <span class="st">"by"</span>, <span class="st">"could"</span>, <span class="st">"would"</span>, <span class="st">"very"</span>, <span class="st">"no"</span>, <span class="st">"what"</span>, <span class="st">"which"</span>, <span class="st">"they"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"were"</span>, <span class="st">"there"</span>, <span class="st">"me"</span>, <span class="st">"an"</span>, <span class="st">"must"</span>, <span class="st">"this"</span>, <span class="st">"said"</span>, <span class="st">"from"</span>, <span class="st">"or"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"will"</span>, <span class="st">"any"</span>, <span class="st">"much"</span>, <span class="st">"than"</span>, <span class="st">"such"</span>, <span class="st">"their"</span>, <span class="st">"them"</span>, <span class="st">"if"</span>, <span class="st">"do"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"did"</span>, <span class="st">"one"</span>, <span class="st">"when"</span>, <span class="st">"your"</span>, <span class="st">"more"</span>, <span class="st">"are"</span>, <span class="st">"we"</span>, <span class="st">"who"</span>, <span class="st">"up"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"out"</span>, <span class="st">"down"</span>, <span class="st">"into"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"hw5_raw.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    fin_lines <span class="op">=</span> f.readlines()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fin_text <span class="op">=</span> <span class="st">""</span>.join(fin_lines)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>clean_text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\[</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\]</span><span class="vs">'</span>, <span class="st">''</span>, fin_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="ebcf8ccc" class="cell" data-execution_count="3">
+<p>This is me first opening my text file and reading it in to the qmd. I son;t have to path it because the txt file and this are in the same folder. I then joined lines together to make a string instead of a list. Then I cleaned out all of the brackets and the text within the brackets. I did google how to do get rid of brackets and whats inside and it suggested re.sub. So I adopted it and it reads variable (clean_text) equals re.sub, with substitutes something in your txt file for something else. then in () you put first what your trying to get rid of, in this case it’s brackets and whats inside, then you put in parenthesis what will replace it so in this case it is empty, then you put the file or variable that you are doing this to so the previously joined fin_text above. And that is how you re.sub.</p>
+<div id="8e209005" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../homework/hw5/hw5_raw.txt"</span>, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    fin_lines <span class="op">=</span> f.readlines()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fin_text <span class="op">=</span> <span class="st">""</span>.join(fin_lines)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>clean_text <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\[</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\]</span><span class="vs">'</span>, <span class="st">''</span>, fin_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\*</span><span class="pp">[^*]</span><span class="op">*</span><span class="ch">\*</span><span class="vs">"</span>, clean_text)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> songs[<span class="dv">1</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="e5379538" class="cell" data-execution_count="4">
+<p>This is me splitting the text byt songs because there are 5 songs within the file. I used re.split and this is the suggested method. I did have to google how to label what is within astricks and suggested the code above and then again you identify where you are doing this splitting to. Then you start doing this at 1 (which is techincally 2 but thats python for you) and read from there because whats in 0 is not content.</p>
+<div id="9114913e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> re.split(<span class="vs">r"</span><span class="ch">\*</span><span class="pp">[^*]</span><span class="op">*</span><span class="ch">\*</span><span class="vs">"</span>, clean_text)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>songs <span class="op">=</span> songs[<span class="dv">1</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>songs_num <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> song <span class="kw">in</span> songs:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    songs_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="vs">"</span>, song.lower()) </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> [l <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">if</span> l <span class="op">!=</span> <span class="st">""</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"Line"</span>: l, <span class="st">"Songs"</span>: songs_num})</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>fin_df <span class="op">=</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="d36e5802" class="cell" data-execution_count="5">
+<p>This is creating a data frame. So first you start rows which will be where all of your columns and data lives. Then you create songs_num = 0 which invokes the songs variable from above. Then you create a for loop where for each new song in songs or where the text splits you add one two song_num. Then you define lines, which is where you split the code per row by line in python not by word, and then you use .lower to make it all lowercase. Then you delete all empty lines by defining lines as any line that is not blank. The you use rows. append with creates your intial columns and what will be inside them. The you creare your data frame with panda.</p>
+<div id="b2caaa73" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>songs_num <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>title_search <span class="op">=</span> re.search(<span class="vs">r"</span><span class="dv">^\s</span><span class="op">*</span><span class="kw">(</span><span class="pp">[^</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="kw">)</span><span class="vs">"</span>, fin_text)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> song <span class="kw">in</span> songs:</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    songs_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> re.split(<span class="vs">r"</span><span class="pp">[</span><span class="ch">\n</span><span class="pp">]</span><span class="op">+</span><span class="vs">"</span>, song.lower()) </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> [l <span class="cf">for</span> l <span class="kw">in</span> lines <span class="cf">if</span> l <span class="op">!=</span> <span class="st">""</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"Line"</span>: l, <span class="st">"Songs"</span>: songs_num})</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> title_search:</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> title_search.group(<span class="dv">1</span>).strip()</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="ss">f"Song </span><span class="sc">{</span>songs_num<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lines:</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        rows.append({<span class="st">"Line"</span>: l, <span class="st">"Songs"</span>: songs_num, <span class="st">"Title"</span>: title})</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fin_df <span class="op">=</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'Length'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'has_love'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.contains(<span class="st">'love'</span>).astype(<span class="bu">bool</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">"Singer"</span>] <span class="op">=</span> <span class="st">"Finneas"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="8d6f414b" class="cell" data-execution_count="6">
+<p>This is creating more columns for your data frame external to the intial text. So the first one finds the number of words in each line by going into lines in fin_df and spliting that string because line creates its own string and indexing the variables in that each indvudual string defined as line. The next one finds whter a line has the word lover in it by checking if a string contains the word love and producing a boolin value (true or false) based on the outcome. I did gogle how to do this one but I beleve that we have covered each part of this line in class it just suggested i string them together. Then i created a constant variable which is all of these congs were sung byt finease so I created a column and defined it as singer and the just labeled it Finneas.</p>
+<div id="6aed8905" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'Length'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.split().<span class="bu">str</span>.<span class="bu">len</span>()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">'has_love'</span>] <span class="op">=</span> fin_df[<span class="st">'Line'</span>].<span class="bu">str</span>.contains(<span class="st">'love'</span>).astype(<span class="bu">bool</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fin_df[<span class="st">"Singer"</span>] <span class="op">=</span> <span class="st">"Finneas"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div id="113ad29a" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fin_df.to_csv(<span class="st">"hw5_deweese_abagail.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>check <span class="op">=</span> pd.read_csv(<span class="st">"hw5_deweese_abagail.csv"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(fin_df), <span class="bu">len</span>(check))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>check.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fin_df.to_csv(<span class="st">"hw5_deweese_abagail.csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>check <span class="op">=</span> pd.read_csv(<span class="st">"hw5_deweese_abagail.csv"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(check))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>check.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>166 166</code></pre>
+<pre><code>166</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -290,6 +272,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This creates an actual table and a file type called csv. that renders this code. Then check allows panda to read the file into qmd. Then it prints the total number of rows. Then i make the tabler only read the first 10 rows by using .head.</p>
+<p>Reflection: One row of my df is a line of the text file, which number song the line comes from (1 - 5), the # of words in each line, whether the line has the word love in it, and who sings the song. I threw out the labels of parts of the song, the titles, and the enpty lines because all I wanted swas the content in the songs. The most interesting part if this was that on the coding side yoyu have to be very specific about if somethings a .str and from the data I found intresting how little the word love is in these songs because for the most paet these are love songs. And to address the elephant in the room I know there are only two columns from hte text soe ifically. I have been stuck on this for a week and a half now and I feel I just need to submit this assignment get feedback and keep working on it. I will figure this out but the code is obstinant. I’m sorry about this.</p>
 
 </main>
 <!-- /main column -->
