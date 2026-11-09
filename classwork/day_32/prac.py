@@ -14,3 +14,13 @@ it = book_to_spacy_df("alice_it.txt", "Italian", nlp_it, "CAPITOLO")
 
 for df in [en, fr, it]:
     print(df["text"][0], len(df), df["chapter"].max())
+for df in [en, fr, it]:
+    print(df["text"][0], df.groupby(["chapter", "sentence"]).size().mean())
+for df in [en, fr, it]:
+    print(df["text"][0], round((df["pos"] == "PRON").mean() * 1000, 1))
+it_nouns = it[it["pos"] == "NOUN"]
+print("Feminine:", it_nouns["morph"].str.contains("Gender=Fem").sum())
+print("Masculine:", it_nouns["morph"].str.contains("Gender=Masc").sum()) 
+
+for df in [en, fr, it]:
+    print(df["text"][0], round((df["pos"] == "DET").mean() * 1000, 1))
