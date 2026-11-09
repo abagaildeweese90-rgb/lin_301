@@ -8,12 +8,9 @@ nlp = spacy.load("en_core_web_sm")
 nlp_fr = spacy.load("fr_core_news_sm")
 nlp_it = spacy.load("it_core_news_sm")
 
-doc = nlp_it("I gatti mangiano i pipistrelli?")
+en = book_to_spacy_df("alice.txt", "English", nlp)
+fr = book_to_spacy_df("alice_fr.txt", "French", nlp_fr, "CHAPITRE")
+it = book_to_spacy_df("alice_it.txt", "Italian", nlp_it, "CAPITOLO")
 
-for token in doc:
-    print(token.text, token.lemma_, token.pos_)
-
-doc = nlp_it("Alice cominciava a sentirsi stanca.")
-for token in doc:
-    print(token.text, token.lemma_, token.pos_, token.morph)
-    
+for df in [en, fr, it]:
+    print(df["text"][0], len(df), df["chapter"].max())
