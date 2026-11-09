@@ -12,4 +12,8 @@ doc = nlp_it("I gatti mangiano i pipistrelli?")
 
 for token in doc:
     print(token.text, token.lemma_, token.pos_)
+
+doc = nlp_it("Alice cominciava a sentirsi stanca.")
+for token in doc:
+    print(token.text, token.lemma_, token.pos_, token.morph)
     
