@@ -129,11 +129,23 @@ def is_a(word, category):
                 return True
     return False
 
-def is_vowel(letter):
-    if is_vowel == a:
-        return True
-    else:
-        return False
+def is_vowel(vowel): 
+    return vowel in {"a","e", "i", "o", "u", "ā", "ē", "ī", "ō", "ū"}
+
+def cv_pattern(word: str):
+    return "".join("V" if is_vowel(vowel) else "C" for vowel in word)
+
+def syllabify(word: str):
+    is_vowel = r"(?<=[aeiouāēīōū])"
+    syllables = re.split(is_vowel, word)
+    return [sy for sy in syllables if sy]
+
+
+def count_syllables(word): 
+    return len(syllabify(word))
+
+    
+    
 
 
 
