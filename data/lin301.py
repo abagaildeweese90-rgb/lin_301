@@ -130,7 +130,7 @@ def is_a(word, category):
     return False
 
 def is_vowel(letter):
-    if is_vowel == a or e or i or o or u or ā or ē or ī or ō or ū
+    if is_vowel == a or e or i or o or u or ā or ē or ī or ō or ū:
         return True
     else:
         return False

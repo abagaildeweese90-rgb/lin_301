@@ -12,5 +12,5 @@ sys.path.append("../../data")
 from lin301 import * 
 ```
 ```{python}
-
+print(is_vowel(a))
 ```
