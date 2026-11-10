@@ -1,0 +1,16 @@
+---
+title: "hw6_deweese_abagail"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+```{python}
+import sys
+sys.path.append("../../data")
+from lin301 import * 
+```
+```{python}
+
+```

@@ -128,3 +128,14 @@ def is_a(word, category):
             if category in path:
                 return True
     return False
+
+def is_vowel(letter):
+    if is_vowel == a or e or i or o or u or ā or ē or ī or ō or ū
+        return True
+    else:
+        return False
+
+
+
+
+    
