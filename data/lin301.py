@@ -140,7 +140,7 @@ def syllabify(word: str):
     syllables = re.split(is_vowel, word)
     return [sy for sy in syllables if sy]
 
-
+   
 def count_syllables(word): 
     return len(syllabify(word))
 

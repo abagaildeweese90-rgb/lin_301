@@ -8,12 +8,33 @@ jupyter: python3
 
 ```{python}
 import sys
-import csv
+import pandas as pd
 sys.path.append("../../data")
 from lin301 import * 
 ```
 ```{python}
-with open("hawaiian_words.csv", mode='r', newline='', encoding="utf-8") as file:
-     hw = csv.reader(file)
-print(hw)
+hw_df = pd.read_csv("hawaiian_words.csv")
+```
+```{python}
+hw_df["CV"] = hw_df['word'].apply(cv_pattern)
+hw_df["Syllables"] = hw_df['word'].apply(syllabify)
+hw_df["Syllables"] = hw_df["Syllables"].str.join(".")
+hw_df["N_Syllables"] = hw_df['word'].apply(count_syllables)
+print(hw_df.head())
+```
+```{python}
+hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
+```
+
+```{python}
+total = 0
+N_Syllables = hw_df['word'].apply(syllabify)
+for w in N_Syllables:
+  total += len(w)
+print("The average number of syllables is:", total / len(N_Syllables))
+```
+```{python}
+most = hw_df["N_Syllables"].max()
+syll_max = hw_df.loc[most, "word"]
+print("The word with the most syllables is:", syll_max, "with", most, "syllables")
 ```

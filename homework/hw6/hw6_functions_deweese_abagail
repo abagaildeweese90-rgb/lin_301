@@ -1,0 +1,26 @@
+---
+title: "hw6_deweese_abagail"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+```{python}
+import sys
+import pandas as pd
+sys.path.append("../../data")
+from lin301 import * 
+```
+```{python}
+hw_df = pd.read_csv("hawaiian_words.csv")
+```
+```{python}
+def join_syllables(word)
+```
+```{python}
+hw_df["CV"] = hw_df['word'].apply(cv_pattern)
+hw_df["Syllables"] = hw_df['word'].apply(syllabify)
+hw_df["N_Syllables"] = hw_df['word'].apply(count_syllables)
+print(hw_df.head())
+```

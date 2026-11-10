@@ -1,46 +1,46 @@
-word,meaning
-aloha,love; hello; goodbye
-mahalo,thanks
-ʻohana,family
-hawaiʻi,Hawaiʻi
-honolulu,Honolulu (sheltered bay)
-waikīkī,Waikīkī (spouting water)
-kamehameha,Kamehameha (the lonely one)
-humuhumunukunukuāpuaʻa,reef triggerfish
-ʻukulele,ukulele (leaping flea)
-lūʻau,feast
-hula,hula dance
-poke,cut into pieces; raw fish salad
-wikiwiki,quick
-kahuna,priest; expert
-keiki,child
-kāne,man
-wahine,woman
-mana,spiritual power
-moana,ocean
-ʻāina,land
-lei,garland
-pau,finished
-puka,hole
-honu,green sea turtle
-nēnē,Hawaiian goose
-pali,cliff
-makai,toward the sea
-mauka,toward the mountains
-kōkua,help
-lānaʻi,porch
-maui,Maui
-oʻahu,Oʻahu
-kauaʻi,Kauaʻi
-kīlauea,Kīlauea (spewing)
-pele,"Pele, goddess of volcanoes"
-lilikoʻi,passion fruit
-poi,mashed taro
-mele,song
-hale,house
-kai,sea
-nani,beautiful
-pua,flower
-ʻōhiʻa,ʻōhiʻa tree
-menehune,legendary little people
-malihini,newcomer
+﻿word,meaning,CV,Syllables,N_Syllables
+aloha,love; hello; goodbye,VCVCV,a.lo.ha,3
+mahalo,thanks,CVCVCV,ma.ha.lo,3
+ʻohana,family,CVCVCV,ʻo.ha.na,3
+hawaiʻi,Hawaiʻi,CVCVVCV,ha.wa.i.ʻi,4
+honolulu,Honolulu (sheltered bay),CVCVCVCV,ho.no.lu.lu,4
+waikīkī,Waikīkī (spouting water),CVVCVCV,wa.i.kī.kī,4
+kamehameha,Kamehameha (the lonely one),CVCVCVCVCV,ka.me.ha.me.ha,5
+humuhumunukunukuāpuaʻa,reef triggerfish,CVCVCVCVCVCVCVCVVCVVCV,hu.mu.hu.mu.nu.ku.nu.ku.ā.pu.a.ʻa,12
+ʻukulele,ukulele (leaping flea),CVCVCVCV,ʻu.ku.le.le,4
+lūʻau,feast,CVCVV,lū.ʻa.u,3
+hula,hula dance,CVCV,hu.la,2
+poke,cut into pieces; raw fish salad,CVCV,po.ke,2
+wikiwiki,quick,CVCVCVCV,wi.ki.wi.ki,4
+kahuna,priest; expert,CVCVCV,ka.hu.na,3
+keiki,child,CVVCV,ke.i.ki,3
+kāne,man,CVCV,kā.ne,2
+wahine,woman,CVCVCV,wa.hi.ne,3
+mana,spiritual power,CVCV,ma.na,2
+moana,ocean,CVVCV,mo.a.na,3
+ʻāina,land,CVVCV,ʻā.i.na,3
+lei,garland,CVV,le.i,2
+pau,finished,CVV,pa.u,2
+puka,hole,CVCV,pu.ka,2
+honu,green sea turtle,CVCV,ho.nu,2
+nēnē,Hawaiian goose,CVCV,nē.nē,2
+pali,cliff,CVCV,pa.li,2
+makai,toward the sea,CVCVV,ma.ka.i,3
+mauka,toward the mountains,CVVCV,ma.u.ka,3
+kōkua,help,CVCVV,kō.ku.a,3
+lānaʻi,porch,CVCVCV,lā.na.ʻi,3
+maui,Maui,CVVV,ma.u.i,3
+oʻahu,Oʻahu,VCVCV,o.ʻa.hu,3
+kauaʻi,Kauaʻi,CVVVCV,ka.u.a.ʻi,4
+kīlauea,Kīlauea (spewing),CVCVVVV,kī.la.u.e.a,5
+pele,"Pele, goddess of volcanoes",CVCV,pe.le,2
+lilikoʻi,passion fruit,CVCVCVCV,li.li.ko.ʻi,4
+poi,mashed taro,CVV,po.i,2
+mele,song,CVCV,me.le,2
+hale,house,CVCV,ha.le,2
+kai,sea,CVV,ka.i,2
+nani,beautiful,CVCV,na.ni,2
+pua,flower,CVV,pu.a,2
+ʻōhiʻa,ʻōhiʻa tree,CVCVCV,ʻō.hi.ʻa,3
+menehune,legendary little people,CVCVCVCV,me.ne.hu.ne,4
+malihini,newcomer,CVCVCVCV,ma.li.hi.ni,4
