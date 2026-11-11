@@ -1,0 +1,140 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"hw6_deweese_abagail\"\n",
+        "format:\n",
+        "  html:\n",
+        "    code-fold: true\n",
+        "jupyter: python3\n",
+        "---"
+      ],
+      "id": "8574ea72"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import sys\n",
+        "import pandas as pd\n",
+        "sys.path.append(\"../../data\")\n",
+        "from lin301 import * "
+      ],
+      "id": "794faa8d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "hw_df = pd.read_csv(\"hawaiian_words.csv\")"
+      ],
+      "id": "46f471d8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "hw_df[\"CV\"] = hw_df['word'].apply(cv_pattern)\n",
+        "hw_df[\"Syllables\"] = hw_df['word'].apply(syllabify)\n",
+        "hw_df[\"Syllables\"] = hw_df[\"Syllables\"].str.join(\".\")\n",
+        "hw_df[\"N_Syllables\"] = hw_df['word'].apply(count_syllables)\n",
+        "print(hw_df.head())"
+      ],
+      "id": "47f85742",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "hw_df.to_csv(\"hawaiian_words.csv\", index=False, encoding=\"utf-8-sig\")"
+      ],
+      "id": "4958e37c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "total = 0\n",
+        "N_Syllables = hw_df['word'].apply(syllabify)\n",
+        "for w in N_Syllables:\n",
+        "  total += len(w)\n",
+        "print(\"The average number of syllables is:\", total / len(N_Syllables))"
+      ],
+      "id": "90d4f2ca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "most = hw_df[\"N_Syllables\"].max()\n",
+        "syll_max = hw_df.loc[most, \"word\"]\n",
+        "print(\"The word with the most syllables is:\", syll_max, \"with\", most, \"syllables\")"
+      ],
+      "id": "69372b89",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "num_of_syl_wrds = hw_df['N_Syllables'].value_counts()\n",
+        "print(\"The number of syllables in each word is:\", num_of_syl_wrds)"
+      ],
+      "id": "ce16b7d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dbl_c = hw_df[\"CV\"].str.contains(\"CC\")\n",
+        "if dbl_c is True:\n",
+        "  print(\"There are double consonants\")\n",
+        "else:\n",
+        "  print(\"There are no double consonants.\")"
+      ],
+      "id": "4bd01fc7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dbl_c = hw_df[\"CV\"].str.endswith(\"C\")\n",
+        "if dbl_c is True:\n",
+        "  print(\"Hawaiian words can end in a consonant.\")\n",
+        "else:\n",
+        "  print(\"Hawaiian words can't end in a consonant.\")"
+      ],
+      "id": "67315883",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.14/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

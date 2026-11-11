@@ -38,3 +38,29 @@ most = hw_df["N_Syllables"].max()
 syll_max = hw_df.loc[most, "word"]
 print("The word with the most syllables is:", syll_max, "with", most, "syllables")
 ```
+```{python}
+num_of_syl_wrds = hw_df['N_Syllables'].value_counts()
+print("The number of syllables in each word is:", num_of_syl_wrds)
+```
+```{python}
+dbl_c = hw_df["CV"].str.contains("CC")
+if dbl_c is True:
+  print("There are double consonants")
+else:
+  print("There are no double consonants.")
+```
+```{python}
+ends_c = hw_df["CV"].str.endswith("C")
+if ends_c is True:
+  print("Hawaiian words can end in a consonant.")
+else:
+  print("Hawaiian words can't end in a consonant.")
+```
+```{python}
+hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
+syllables = hw_df['word'].apply(syllabify)
+rows = []
+for sy in syllables:
+  rows.append({"syllables": syllables})
+sy_df = pd.DataFrame(rows)
+```
