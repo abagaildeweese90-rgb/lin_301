@@ -11,10 +11,26 @@ import sys
 import pandas as pd
 sys.path.append("../../data")
 from lin301 import * 
+import unicodedata
+from pypinyin import pinyin
+import pykakasi
+import spacy
+import nltk
+nltk.download("omw-2.0")
+nlp_el = spacy.load("el_core_news_sm")
+nlp_fi = spacy.load("fi_core_news_sm")
 ```
 This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.
 ```{python}
-load_text(macbeth_en.txt)
-load_text(macbeth_fi.txt)
-load_text(macbeth_el.txt)
+load_text("macbeth_en.txt")
+load_words("macbeth_en.txt")
+load_text("macbeth_fi.txt")
+load_words("macbeth_fi.txt")
+load_text("macbeth_el.txt")
+load_words("macbeth_el.txt")
+```
+```{python}
+book_to_spacy_df("macbeth_en.txt", "en_df", "nlp_en", chapter_word="ACT I")
+book_to_spacy_df("macbeth_fi.txt", "fi_df", "nlp_fi", chapter_word="ENSIMMÄINEN NÄYTÖS.")
+book_to_spacy_df("macbeth_el.txt", "el_df", "nlp_el", chapter_word="ΠΡΑΞΙΣ ΠΡΩΤΗ")
 ```
