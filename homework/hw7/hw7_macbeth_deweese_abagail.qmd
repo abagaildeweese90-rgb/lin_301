@@ -1,0 +1,20 @@
+---
+title: "hw6_deweese_abagail"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+```{python}
+import sys
+import pandas as pd
+sys.path.append("../../data")
+from lin301 import * 
+```
+This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.
+```{python}
+load_text(macbeth_en.txt)
+load_text(macbeth_fi.txt)
+load_text(macbeth_el.txt)
+```
