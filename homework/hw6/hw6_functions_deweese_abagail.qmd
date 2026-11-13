@@ -12,32 +12,63 @@ import pandas as pd
 sys.path.append("../../data")
 from lin301 import * 
 ```
+This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.
+
 ```{python}
-hw_df = pd.read_csv("hawaiian_words.csv")
+print(is_vowel("a"))
+print(is_vowel("ū"))
+print(is_vowel("k"))
+print(is_vowel("ʻ"))
 ```
+This is a function that defines the term is_vowel with the parameter of a vowel. And then colon, indent then it returns whether or not a vowel is in the set of vowels provided.
 ```{python}
-hw_df["CV"] = hw_df['word'].apply(cv_pattern)
-hw_df["Syllables"] = hw_df['word'].apply(syllabify)
+print(cv_pattern("aloha"))
+print(cv_pattern("ʻohana"))
+```
+This is a function that takes a word and changes it to a CV pattern based on whether a letter is a vowel or consonant. It defines cv_pattern(word) and then returns a joined string and uses an if else loop that says write a V if a letter is in is_vowel else write a C to create a CV pattern.
+```{python}
+print(syllabify("aloha"))
+print(syllabify("kīlauea"))
+```
+I used google to help me be able to use is_vowel in this function because what I wanted to do was create a new list of vowels and define it agian is is_vowels but that didn't seem the intention. But this defines syllabify(word) thats a string. Then it creates syllables which is an empty list and creates syllabify as an empty string. Then it uses a for loop to go through each word one letter at a time. Then you use += to add a the letter to the empty string above. The you use and if else statment to say that if the letter is true using is_vowel then it uses .append to end syllable and go on to a new one if not keep going.  Then it returns the each a list of each syllable.
+
+```{python}
+print(count_syllables("aloha"))
+```
+This is a function that defines count_syllables(word) and returns the number of outputs for each word thats gone from syllabify using len (length).
+```{python}
+hw_df = pd.read_csv("hawaiian_words (1).csv")
+```
+This loads in and defines the csv file "hawaiian_words (1)"" (I had to download the file again because of technical issues but its the same thing as the orginal pinky swear) and defines.creates it as the data frame hw_df.
+```{python}
+hw_df["CV"] = hw_df["word"].apply(cv_pattern)
+hw_df["Syllables"] = hw_df["word"].apply(syllabify)
 hw_df["Syllables"] = hw_df["Syllables"].str.join(".")
-hw_df["N_Syllables"] = hw_df['word'].apply(count_syllables)
+hw_df["N_Syllables"] = hw_df["word"].apply(count_syllables)
+hw_df["Syllabify Diphthongs"] = hw_df["word"].apply(syllabify_diphthongs)
+hw_df["Syllabify Diphthongs"] = hw_df["Syllabify Diphthongs"].str.join(".")
 print(hw_df.head())
 ```
+All of these do basically the same thing of creating a new column by going into the word column in the orginal data frame and .applying the functions we created above. I did have to google .apply but all it does is create a new row that each word in the word column through the function and returns the new value. For syllables and syllabify dipthongs I had to join the strings with a period so I used .str.join and then inbetween each place they were to join place a period. 
 ```{python}
 total = 0
-N_Syllables = hw_df['word'].apply(syllabify)
-for w in N_Syllables:
-  total += len(w)
-print("The average number of syllables is:", total / len(N_Syllables))
+syllables = hw_df['word'].apply(syllabify)
+for s in syllables:
+  total += len(s)
+print("The average number of syllables is:", total / len(syllables))
 ```
+This defines total as 0 and creates a variable version of the column syllables above. Then it creates a for loop that says for every value in syllables ad the length of that variable to the total. Then print a message and the total divded by the length of syllables (the variable).
 ```{python}
 most = hw_df["N_Syllables"].max()
 syll_max = hw_df.loc[hw_df["N_Syllables"].idxmax(), "word"]
 print("The word with the most syllables is:", syll_max, "with", most, "syllables")
 ```
+This defines most as the word with the most syllables using .max. It then creates syll_max which uses .locate to go through the column N_Syllables to find the location of the max value and identifying the word in word that corresponded with that. I asked google for help because in syll_max I was using .max again and it wasn't working well and it suggest .idmax which tell you specifically where the highest value is located.
 ```{python}
 num_of_syl_wrds = hw_df['N_Syllables'].value_counts()
 print("The number of syllables in each word is:", num_of_syl_wrds)
 ```
+This defines num_of_syl_wrds by searching the N_Syllables column for how common the values are and counting them using .value_counts.
 ```{python}
 dbl_c = hw_df["CV"].str.contains("CC")
 if dbl_c is True:
@@ -45,6 +76,7 @@ if dbl_c is True:
 else:
   print("There are no double consonants.")
 ```
+This defines dbl_c as searching the CV coulmn for weather it contains any instances of a dounble consonant or "CC" using .str.contains. Then there is an if else statement that says if dbl_c is true print one thing, else print that there aren't double consonants.
 ```{python}
 ends_c = hw_df["CV"].str.endswith("C")
 if ends_c is True:
@@ -52,18 +84,19 @@ if ends_c is True:
 else:
   print("Hawaiian words can't end in a consonant.")
 ```
+This defines ends_c as searching through the CV column checks if any of them end with a consonant or "C" using .str.endswith. If so print Hawaiian words can end in a consonant. Else print Hawaiian words can't end in a consonant.
 ```{python}
-
 syl_df = hw_df[["Syllables", "word"]].copy()
 syl_df["Syllables"] = syl_df["Syllables"].str.split(".")
 syl_df = syl_df.explode("Syllables")
-syl_df = syl_df.rename(columns={"word": "Word",})
 print(syl_df.head(10))
 ```
+I had some real trouble with this section so I asked and llm to help but I understood it I took out the fluff it gave me to tailor my code. This creates a second data frame from hw_df called syl_df by copying over the syllables and word column using .copy. Then you redefine syllables by spliting the string on every period. Then used .explode (which is very helpful to learn about) to seperare each element in a list into its own seperate row. Then it prints the first 10 lines.
 ```{python}
 com = syl_df["Syllables"].value_counts().head(10)
 print("The 10 most common syllables are:", com)
 ```
+This defines com as searching the new dataframe for the most common values using .value_counts and then only looking at the top 10 using .head.
 ```{python}
 print(cv_pattern("banana"))
 print(cv_pattern("splash")) 
@@ -73,8 +106,6 @@ print(syllabify("splash"))
 print(syllabify("strengths"))
 ```
 ```{python}
-hw_df["Syllabify_diphthongs"] = hw_df['word'].apply(syllabify_diphthongs)
+hw_df.to_csv("hawaiian_words (1).csv", index=False, encoding="utf-8-sig")
 ```
-```{python}
-hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
-```
+This reloads the csv file to update it after I added the new columns above.

@@ -12,7 +12,7 @@
         "jupyter: python3\n",
         "---"
       ],
-      "id": "8574ea72"
+      "id": "7360b325"
     },
     {
       "cell_type": "code",
@@ -23,7 +23,7 @@
         "sys.path.append(\"../../data\")\n",
         "from lin301 import * "
       ],
-      "id": "794faa8d",
+      "id": "34fbd633",
       "execution_count": null,
       "outputs": []
     },
@@ -33,7 +33,7 @@
       "source": [
         "hw_df = pd.read_csv(\"hawaiian_words.csv\")"
       ],
-      "id": "46f471d8",
+      "id": "f6c4d5f9",
       "execution_count": null,
       "outputs": []
     },
@@ -47,17 +47,7 @@
         "hw_df[\"N_Syllables\"] = hw_df['word'].apply(count_syllables)\n",
         "print(hw_df.head())"
       ],
-      "id": "47f85742",
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "metadata": {},
-      "source": [
-        "hw_df.to_csv(\"hawaiian_words.csv\", index=False, encoding=\"utf-8-sig\")"
-      ],
-      "id": "4958e37c",
+      "id": "ca28b4f9",
       "execution_count": null,
       "outputs": []
     },
@@ -71,7 +61,7 @@
         "  total += len(w)\n",
         "print(\"The average number of syllables is:\", total / len(N_Syllables))"
       ],
-      "id": "90d4f2ca",
+      "id": "a6226c59",
       "execution_count": null,
       "outputs": []
     },
@@ -80,10 +70,10 @@
       "metadata": {},
       "source": [
         "most = hw_df[\"N_Syllables\"].max()\n",
-        "syll_max = hw_df.loc[most, \"word\"]\n",
+        "syll_max = hw_df.loc[hw_df[\"N_Syllables\"].idxmax(), \"word\"]\n",
         "print(\"The word with the most syllables is:\", syll_max, \"with\", most, \"syllables\")"
       ],
-      "id": "69372b89",
+      "id": "172d0324",
       "execution_count": null,
       "outputs": []
     },
@@ -94,7 +84,7 @@
         "num_of_syl_wrds = hw_df['N_Syllables'].value_counts()\n",
         "print(\"The number of syllables in each word is:\", num_of_syl_wrds)"
       ],
-      "id": "ce16b7d6",
+      "id": "5426d5c9",
       "execution_count": null,
       "outputs": []
     },
@@ -108,7 +98,7 @@
         "else:\n",
         "  print(\"There are no double consonants.\")"
       ],
-      "id": "4bd01fc7",
+      "id": "97c2f84d",
       "execution_count": null,
       "outputs": []
     },
@@ -116,13 +106,74 @@
       "cell_type": "code",
       "metadata": {},
       "source": [
-        "dbl_c = hw_df[\"CV\"].str.endswith(\"C\")\n",
-        "if dbl_c is True:\n",
+        "ends_c = hw_df[\"CV\"].str.endswith(\"C\")\n",
+        "if ends_c is True:\n",
         "  print(\"Hawaiian words can end in a consonant.\")\n",
         "else:\n",
         "  print(\"Hawaiian words can't end in a consonant.\")"
       ],
-      "id": "67315883",
+      "id": "5f430d62",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "syl_df = hw_df[[\"Syllables\", \"word\"]].copy()\n",
+        "syl_df[\"Syllables\"] = syl_df[\"Syllables\"].str.split(\".\")\n",
+        "syl_df = syl_df.explode(\"Syllables\")\n",
+        "syl_df = syl_df.rename(columns={\"word\": \"Word\",})\n",
+        "print(syl_df.head(10))"
+      ],
+      "id": "13e7dc8a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "com = syl_df[\"Syllables\"].value_counts().head(10)\n",
+        "print(\"The 10 most common syllables are:\", com)"
+      ],
+      "id": "280abfd3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(cv_pattern(\"banana\"))\n",
+        "print(cv_pattern(\"splash\")) \n",
+        "print(cv_pattern(\"strengths\"))\n",
+        "print(syllabify(\"banana\"))\n",
+        "print(syllabify(\"splash\"))\n",
+        "print(syllabify(\"strengths\"))"
+      ],
+      "id": "901bcf73",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "hw_df[\"Syllabify Diphthongs\"] = hw_df['word'].apply(syllabify_diphthongs)\n",
+        "hw_df[\"Syllabify Diphthongs\"] = hw_df[\"Syllabify Diphthongs\"].str.join(\".\")"
+      ],
+      "id": "8ee1e6df",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "hw_df.to_csv(\"hawaiian_words.csv\", index=False, encoding=\"utf-8-sig\")"
+      ],
+      "id": "96ec49c1",
       "execution_count": null,
       "outputs": []
     }

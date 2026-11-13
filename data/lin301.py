@@ -137,14 +137,12 @@ def cv_pattern(word: str):
 
 def syllabify(word: str):
     syllables = []
-    current = ""
+    syllabify = ""
     for letter in word:
-        current += letter
+        syllabify += letter
         if is_vowel(letter):
-            syllables.append(current)
-            current = ""
-    if current:
-        syllables.append(current)
+            syllables.append(syllabify)
+            syllabify = ""
     return syllables
 
    
