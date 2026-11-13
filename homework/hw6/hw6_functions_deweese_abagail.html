@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="32636e7c" class="cell" data-execution_count="1">
+<div id="d02ca74e" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.</p>
-<div id="fafcdb1b" class="cell" data-execution_count="2">
+<div id="6035641f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(is_vowel(<span class="st">"a"</span>))</span>
@@ -130,7 +130,7 @@ False</code></pre>
 </div>
 </div>
 <p>This is a function that defines the term is_vowel with the parameter of a vowel. And then colon, indent then it returns whether or not a vowel is in the set of vowels provided.</p>
-<div id="a25dd550" class="cell" data-execution_count="3">
+<div id="f3ae9ecf" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"aloha"</span>))</span>
@@ -142,7 +142,7 @@ CVCVCV</code></pre>
 </div>
 </div>
 <p>This is a function that takes a word and changes it to a CV pattern based on whether a letter is a vowel or consonant. It defines cv_pattern(word) and then returns a joined string and uses an if else loop that says write a V if a letter is in is_vowel else write a C to create a CV pattern.</p>
-<div id="04ab6e67" class="cell" data-execution_count="4">
+<div id="b9b9846e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"aloha"</span>))</span>
@@ -153,8 +153,8 @@ CVCVCV</code></pre>
 ['kī', 'la', 'u', 'e', 'a']</code></pre>
 </div>
 </div>
-<p>I used google to help me be able to use is_vowel in this function because what I wanted to do was create a new list of vowels and define it agian is is_vowels but that didn’t seem the intention. But this defines syllabify(word) thats a string. Then it creates syllables which is an empty list and creates syllabify as an empty string. Then it uses a for loop to go through each word one letter at a time. Then you use += to add a the letter to the empty string above. The you use and if else statment to say that if the letter is true using is_vowel then it uses .append to end syllable and go on to a new one if not keep going.</p>
-<div id="83a2a13b" class="cell" data-execution_count="5">
+<p>I used google to help me be able to use is_vowel in this function because what I wanted to do was create a new list of vowels and define it agian is is_vowels but that didn’t seem the intention. But this defines syllabify(word) thats a string. Then it creates syllables which is an empty list and creates syllabify as an empty string. Then it uses a for loop to go through each word one letter at a time. Then you use += to add a the letter to the empty string above. The you use and if else statment to say that if the letter is true using is_vowel then it uses .append to end syllable and go on to a new one if not keep going. Then it returns the each a list of each syllable.</p>
+<div id="77e641a0" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count_syllables(<span class="st">"aloha"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -164,22 +164,33 @@ CVCVCV</code></pre>
 </div>
 </div>
 <p>This is a function that defines count_syllables(word) and returns the number of outputs for each word thats gone from syllabify using len (length).</p>
-<div id="474d25ce" class="cell" data-execution_count="6">
+<div id="0d47de4b" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hw_df <span class="op">=</span> pd.read_csv(<span class="st">"hawaiian_words (1).csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify_diphthongs(<span class="st">"waikīkī"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['wai', 'kī', 'kī']</code></pre>
+</div>
+</div>
+<p>Similar to the syllabify function I used google to help me set up the function and use the previously created functions. This starts by defining the dipthong sounds in a set. Then it creates syllable_pairs as an empty list, syllabify as an empty string, and defines syllables as 0. Then you create a while loop which goes through the length of a word and adds each letter to the current syllable in syllabify. Then you create an if statement that says if you come accross a vowel you look ahead to the next letter to see if the pair are inside dipthongs. If it is then it creates a new syllable after the second vowel else it creates a new syllable after the first vowel. Then every time either a syllable or a dipthong is found it is .appended to the syllable_pair list. Then if syllabify finds any leftover consonents it .appendeds them to the list (but that shouldn’t happen in hawaiian).</p>
+<div id="bed54c50" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>hw_df <span class="op">=</span> pd.read_csv(<span class="st">"hawaiian_words (1).csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="435c8ef1" class="cell" data-execution_count="7">
+<p>This loads in and defines the csv file “hawaiian_words (1)”” (I had to download the file again because of technical issues but its the same thing as the orginal pinky swear) and defines.creates it as the data frame hw_df.</p>
+<div id="47f904fb" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"CV"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(cv_pattern)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(syllabify)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"Syllables"</span>].<span class="bu">str</span>.join(<span class="st">"."</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"N_Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(count_syllables)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllabify Diphthongs"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(syllabify_diphthongs)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllabify Diphthongs"</span>] <span class="op">=</span> hw_df[<span class="st">"Syllabify Diphthongs"</span>].<span class="bu">str</span>.join(<span class="st">"."</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hw_df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"CV"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(cv_pattern)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(syllabify)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"Syllables"</span>].<span class="bu">str</span>.join(<span class="st">"."</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"N_Syllables"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(count_syllables)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllabify Diphthongs"</span>] <span class="op">=</span> hw_df[<span class="st">"word"</span>].<span class="bu">apply</span>(syllabify_diphthongs)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>hw_df[<span class="st">"Syllabify Diphthongs"</span>] <span class="op">=</span> hw_df[<span class="st">"Syllabify Diphthongs"</span>].<span class="bu">str</span>.join(<span class="st">"."</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hw_df.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       word                   meaning        CV    Syllables  N_Syllables  \
@@ -197,35 +208,38 @@ CVCVCV</code></pre>
 4          ho.no.lu.lu  </code></pre>
 </div>
 </div>
-<div id="83214bf2" class="cell" data-execution_count="8">
+<p>All of these do basically the same thing of creating a new column by going into the word column in the orginal data frame and .applying the functions we created above. I did have to google .apply but all it does is create a new row that each word in the word column through the function and returns the new value. For syllables and syllabify dipthongs I had to join the strings with a period so I used .str.join and then inbetween each place they were to join place a period.</p>
+<div id="6f4b28d3" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>N_Syllables <span class="op">=</span> hw_df[<span class="st">'word'</span>].<span class="bu">apply</span>(syllabify)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w <span class="kw">in</span> N_Syllables:</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  total <span class="op">+=</span> <span class="bu">len</span>(w)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The average number of syllables is:"</span>, total <span class="op">/</span> <span class="bu">len</span>(N_Syllables))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>syllables <span class="op">=</span> hw_df[<span class="st">'word'</span>].<span class="bu">apply</span>(syllabify)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> syllables:</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  total <span class="op">+=</span> <span class="bu">len</span>(s)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The average number of syllables is:"</span>, total <span class="op">/</span> <span class="bu">len</span>(syllables))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>The average number of syllables is: 3.111111111111111</code></pre>
 </div>
 </div>
-<div id="4d04a767" class="cell" data-execution_count="9">
+<p>This defines total as 0 and creates a variable version of the column syllables above. Then it creates a for loop that says for every value in syllables ad the length of that variable to the total. Then print a message and the total divded by the length of syllables (the variable).</p>
+<div id="e04cf0c9" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>most <span class="op">=</span> hw_df[<span class="st">"N_Syllables"</span>].<span class="bu">max</span>()</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>syll_max <span class="op">=</span> hw_df.loc[hw_df[<span class="st">"N_Syllables"</span>].idxmax(), <span class="st">"word"</span>]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The word with the most syllables is:"</span>, syll_max, <span class="st">"with"</span>, most, <span class="st">"syllables"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>most <span class="op">=</span> hw_df[<span class="st">"N_Syllables"</span>].<span class="bu">max</span>()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>syll_max <span class="op">=</span> hw_df.loc[hw_df[<span class="st">"N_Syllables"</span>].idxmax(), <span class="st">"word"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The word with the most syllables is:"</span>, syll_max, <span class="st">"with"</span>, most, <span class="st">"syllables"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>The word with the most syllables is: humuhumunukunukuāpuaʻa with 12 syllables</code></pre>
 </div>
 </div>
-<div id="1cdd1665" class="cell" data-execution_count="10">
+<p>This defines most as the word with the most syllables using .max. It then creates syll_max which uses .locate to go through the column N_Syllables to find the location of the max value and identifying the word in word that corresponded with that. I asked google for help because in syll_max I was using .max again and it wasn’t working well and it suggest .idmax which tell you specifically where the highest value is located.</p>
+<div id="c224af74" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>num_of_syl_wrds <span class="op">=</span> hw_df[<span class="st">'N_Syllables'</span>].value_counts()</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The number of syllables in each word is:"</span>, num_of_syl_wrds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>num_of_syl_wrds <span class="op">=</span> hw_df[<span class="st">'N_Syllables'</span>].value_counts()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The number of syllables in each word is:"</span>, num_of_syl_wrds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>The number of syllables in each word is: N_Syllables
@@ -237,43 +251,45 @@ CVCVCV</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="e53c42a5" class="cell" data-execution_count="11">
+<p>This defines num_of_syl_wrds by searching the N_Syllables column for how common the values are and counting them using .value_counts.</p>
+<div id="2384b955" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dbl_c <span class="op">=</span> hw_df[<span class="st">"CV"</span>].<span class="bu">str</span>.contains(<span class="st">"CC"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> dbl_c <span class="kw">is</span> <span class="va">True</span>:</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"There are double consonants"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"There are no double consonants."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dbl_c <span class="op">=</span> hw_df[<span class="st">"CV"</span>].<span class="bu">str</span>.contains(<span class="st">"CC"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> dbl_c <span class="kw">is</span> <span class="va">True</span>:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"There are double consonants"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"There are no double consonants."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>There are no double consonants.</code></pre>
 </div>
 </div>
-<div id="3a4b3b5e" class="cell" data-execution_count="12">
+<p>This defines dbl_c as searching the CV coulmn for weather it contains any instances of a dounble consonant or “CC” using .str.contains. Then there is an if else statement that says if dbl_c is true print one thing, else print that there aren’t double consonants.</p>
+<div id="1cd250ec" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ends_c <span class="op">=</span> hw_df[<span class="st">"CV"</span>].<span class="bu">str</span>.endswith(<span class="st">"C"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ends_c <span class="kw">is</span> <span class="va">True</span>:</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Hawaiian words can end in a consonant."</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Hawaiian words can't end in a consonant."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ends_c <span class="op">=</span> hw_df[<span class="st">"CV"</span>].<span class="bu">str</span>.endswith(<span class="st">"C"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ends_c <span class="kw">is</span> <span class="va">True</span>:</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Hawaiian words can end in a consonant."</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Hawaiian words can't end in a consonant."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hawaiian words can't end in a consonant.</code></pre>
 </div>
 </div>
-<div id="c9a6a95e" class="cell" data-execution_count="13">
+<p>This defines ends_c as searching through the CV column checks if any of them end with a consonant or “C” using .str.endswith. If so print Hawaiian words can end in a consonant. Else print Hawaiian words can’t end in a consonant.</p>
+<div id="12100692" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>syl_df <span class="op">=</span> hw_df[[<span class="st">"Syllables"</span>, <span class="st">"word"</span>]].copy()</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>syl_df[<span class="st">"Syllables"</span>] <span class="op">=</span> syl_df[<span class="st">"Syllables"</span>].<span class="bu">str</span>.split(<span class="st">"."</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>syl_df <span class="op">=</span> syl_df.explode(<span class="st">"Syllables"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>syl_df <span class="op">=</span> syl_df.rename(columns<span class="op">=</span>{<span class="st">"word"</span>: <span class="st">"Word"</span>,})</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syl_df.head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>syl_df <span class="op">=</span> hw_df[[<span class="st">"Syllables"</span>, <span class="st">"word"</span>]].copy()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>syl_df[<span class="st">"Syllables"</span>] <span class="op">=</span> syl_df[<span class="st">"Syllables"</span>].<span class="bu">str</span>.split(<span class="st">"."</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>syl_df <span class="op">=</span> syl_df.explode(<span class="st">"Syllables"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syl_df.head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Syllables     Word
+<pre><code>  Syllables     word
 0         a    aloha
 0        lo    aloha
 0        ha    aloha
@@ -286,11 +302,12 @@ Name: count, dtype: int64</code></pre>
 3        ha  hawaiʻi</code></pre>
 </div>
 </div>
-<div id="9dcc805e" class="cell" data-execution_count="14">
+<p>I had some real trouble with this section so I asked and llm to help but I understood it I took out the fluff it gave me to tailor my code. This creates a second data frame from hw_df called syl_df by copying over the syllables and word column using .copy. Then you redefine syllables by spliting the string on every period. Then used .explode (which is very helpful to learn about) to seperare each element in a list into its own seperate row. Then it prints the first 10 lines.</p>
+<div id="3a4e892e" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>com <span class="op">=</span> syl_df[<span class="st">"Syllables"</span>].value_counts().head(<span class="dv">10</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The 10 most common syllables are:"</span>, com)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>com <span class="op">=</span> syl_df[<span class="st">"Syllables"</span>].value_counts().head(<span class="dv">10</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The 10 most common syllables are:"</span>, com)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>The 10 most common syllables are: Syllables
@@ -307,31 +324,34 @@ u     6
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="09b46a87" class="cell" data-execution_count="15">
+<p>This defines com as searching the new dataframe for the most common values using .value_counts and then only looking at the top 10 using .head.</p>
+<div id="e3a072b8" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"banana"</span>))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"splash"</span>)) </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"strengths"</span>))</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"banana"</span>))</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"splash"</span>))</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"strengths"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"banana"</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"splash"</span>)) </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_pattern(<span class="st">"strengths"</span>))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"banana"</span>))</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"splash"</span>))</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(syllabify(<span class="st">"strengths"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>CVCVCV
 CCCVCC
 CCCVCCCCC
 ['ba', 'na', 'na']
-['spla']
-['stre']</code></pre>
+['spla', 'sh']
+['stre', 'ngths']</code></pre>
 </div>
 </div>
-<div id="7409adb5" class="cell" data-execution_count="16">
+<p>All of the words are accuratly represented by the CV pattern but because this code was meant to create a new syllable everytime their is a vowel splash and strengths are in accurate because they are one syllable words that end in consonants, differing the languages. Hawaiian has a rule that each syllable ends in atleast one vowel but english has no such rule. English only says that a syllable must have atleast one vowel sound but it doesn’t say it can’t be followed by consonants. For the code im just printing the cv_pattern and syllabify functions applied to the three words provided in the instruction.</p>
+<div id="6f29490e" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>hw_df.to_csv(<span class="st">"hawaiian_words (1).csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>hw_df.to_csv(<span class="st">"hawaiian_words (1).csv"</span>, index<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span><span class="st">"utf-8-sig"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<p>This reloads the csv file to update it after I added the new columns above.</p>
 
 </main>
 <!-- /main column -->

@@ -143,6 +143,8 @@ def syllabify(word: str):
         if is_vowel(letter):
             syllables.append(syllabify)
             syllabify = ""
+    if syllabify:
+        syllables.append(syllabify)
     return syllables
 
    
@@ -151,25 +153,22 @@ def count_syllables(word):
 
 
 def syllabify_diphthongs(word: str):
-    diphthongs = {"ai", "ae", "ao", "au",
-                  "ei", "eu", "oi", "ou", "iu"}
-
+    diphthongs = {"ai", "ae", "ao", "au", "ei", "eu", "oi", "ou", "iu"}
     syllable_pair = []
-    current = ""
+    syllabify = ""
     syllables = 0
-
     while syllables < len(word):
-        current += word[syllables]
+        syllabify += word[syllables]
         if is_vowel(word[syllables]):
             if (syllables + 1 < len(word) and
                 word[syllables:syllables+2] in diphthongs):
-                current += word[syllables+1]
+                syllabify += word[syllables+1]
                 syllables += 1
-            syllable_pair.append(current)
-            current = ""
+            syllable_pair.append(syllabify)
+            syllabify = ""
         syllables += 1
-    if current:
-        syllable_pair.append(current)
+    if syllabify:
+        syllable_pair.append(syllabify)
     return syllable_pair
     
     

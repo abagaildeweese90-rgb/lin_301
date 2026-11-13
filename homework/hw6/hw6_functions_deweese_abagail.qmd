@@ -30,16 +30,20 @@ This is a function that takes a word and changes it to a CV pattern based on whe
 print(syllabify("aloha"))
 print(syllabify("kīlauea"))
 ```
-I used google to help me be able to use is_vowel in this function because what I wanted to do was create a new list of vowels and define it agian is is_vowels but that didn't seem the intention. But this defines syllabify(word) thats a string. Then it creates syllables which is an empty list and creates syllabify as an empty string. Then it uses a for loop to go through each word one letter at a time. Then you use += to add a the letter to the empty string above. The you use and if else statment to say that if the letter is true using is_vowel then it uses .append to end syllable and go on to a new one if not keep going.  Then it returns the each a list of each syllable.
+I used google to help me be able to use is_vowel in this function because what I wanted to do was create a new list of vowels and define it agian as is_vowels but that didn't seem the intention. But this defines syllabify(word) thats a string. Then it creates syllables which is an empty list and creates syllabify as an empty string. Then it uses a for loop to go through each word one letter at a time. Then you use += to add a the letter to the empty string above. Then you use an if else statment to say that if the letter is true using is_vowel then it uses .append to end syllable and go on to a new one if not keep going. Then if syllabify finds any leftover consonents it .appendeds them to the list (but that shouldn't happen in hawaiian). Then it returns the each a list of each syllable.
 
 ```{python}
 print(count_syllables("aloha"))
 ```
 This is a function that defines count_syllables(word) and returns the number of outputs for each word thats gone from syllabify using len (length).
 ```{python}
+print(syllabify_diphthongs("waikīkī"))
+```
+Similar to the syllabify function I used google to help me set up the function and use the previously created functions. This starts by defining the dipthong sounds in a set. Then it creates syllable_pairs as an empty list, syllabify as an empty string, and defines syllables as 0. Then you create a while loop which goes through the length of a word and adds each letter to the current syllable in syllabify. Then you create an if statement that says if you come accross a vowel you look ahead to the next letter to see if the pair are inside dipthongs. If it is then it creates a new syllable after the second vowel else it creates a new syllable after the first vowel. Then every time either a syllable or a dipthong is found it is .appended to the syllable_pair list. Then if syllabify finds any leftover consonents it .appendeds them to the list (but that shouldn't happen in hawaiian).Then it returns the each a list of each syllable.
+```{python}
 hw_df = pd.read_csv("hawaiian_words (1).csv")
 ```
-This loads in and defines the csv file "hawaiian_words (1)"" (I had to download the file again because of technical issues but its the same thing as the orginal pinky swear) and defines.creates it as the data frame hw_df.
+This loads in and defines the csv file "hawaiian_words (1)"" (I had to download the file again because of technical issues but its the same thing as the orginal pinky swear) and defines/creates it as the data frame hw_df.
 ```{python}
 hw_df["CV"] = hw_df["word"].apply(cv_pattern)
 hw_df["Syllables"] = hw_df["word"].apply(syllabify)
@@ -49,7 +53,7 @@ hw_df["Syllabify Diphthongs"] = hw_df["word"].apply(syllabify_diphthongs)
 hw_df["Syllabify Diphthongs"] = hw_df["Syllabify Diphthongs"].str.join(".")
 print(hw_df.head())
 ```
-All of these do basically the same thing of creating a new column by going into the word column in the orginal data frame and .applying the functions we created above. I did have to google .apply but all it does is create a new row that each word in the word column through the function and returns the new value. For syllables and syllabify dipthongs I had to join the strings with a period so I used .str.join and then inbetween each place they were to join place a period. 
+All of these do basically the same thing of creating a new column by going into the word column in the orginal data frame and .applying the functions we created above. I did have to google .apply but all it does is create a new row that each word in the word column through the function and returns the new value. For syllables and syllabify dipthongs I had to join the strings with a period so I used .str.join and then inbetween each place they were to join, place a period. 
 ```{python}
 total = 0
 syllables = hw_df['word'].apply(syllabify)
@@ -57,13 +61,13 @@ for s in syllables:
   total += len(s)
 print("The average number of syllables is:", total / len(syllables))
 ```
-This defines total as 0 and creates a variable version of the column syllables above. Then it creates a for loop that says for every value in syllables ad the length of that variable to the total. Then print a message and the total divded by the length of syllables (the variable).
+This defines total as 0 and creates a variable version of the column syllables above. Then it creates a for loop that says for every value in syllables add the length of that variable to the total. Then print a message and the total divded by the length of syllables (the variable).
 ```{python}
 most = hw_df["N_Syllables"].max()
 syll_max = hw_df.loc[hw_df["N_Syllables"].idxmax(), "word"]
 print("The word with the most syllables is:", syll_max, "with", most, "syllables")
 ```
-This defines most as the word with the most syllables using .max. It then creates syll_max which uses .locate to go through the column N_Syllables to find the location of the max value and identifying the word in word that corresponded with that. I asked google for help because in syll_max I was using .max again and it wasn't working well and it suggest .idmax which tell you specifically where the highest value is located.
+This defines most as the word with the most syllables using .max. It then creates syll_max which uses .locate to go through the column N_Syllables to find the location of the max value and identifying the word in word that corresponded with that. I asked google for help because in syll_max I was using .max again and it wasn't working well and it suggested .idmax which tells you specifically where the highest value is located.
 ```{python}
 num_of_syl_wrds = hw_df['N_Syllables'].value_counts()
 print("The number of syllables in each word is:", num_of_syl_wrds)
@@ -84,7 +88,7 @@ if ends_c is True:
 else:
   print("Hawaiian words can't end in a consonant.")
 ```
-This defines ends_c as searching through the CV column checks if any of them end with a consonant or "C" using .str.endswith. If so print Hawaiian words can end in a consonant. Else print Hawaiian words can't end in a consonant.
+This defines ends_c as searching through the CV column to check if any of them end with a consonant or "C" using .str.endswith. If so print Hawaiian words can end in a consonant. Else print Hawaiian words can't end in a consonant.
 ```{python}
 syl_df = hw_df[["Syllables", "word"]].copy()
 syl_df["Syllables"] = syl_df["Syllables"].str.split(".")
@@ -105,7 +109,9 @@ print(syllabify("banana"))
 print(syllabify("splash"))
 print(syllabify("strengths"))
 ```
+All of the words are accuratly represented by the CV pattern but because this code was meant to create a new syllable everytime their is a vowel splash and strengths are inaccurate because they are one syllable words that end in consonants, differing the languages. Hawaiian has a rule that each syllable ends in atleast one vowel but english has no such rule. English only says that a syllable must have atleast one vowel sound but it doesn't say it can't be followed by consonants. For the code, I'm just printing the cv_pattern and syllabify functions applied to the three words provided in the instruction.
 ```{python}
 hw_df.to_csv("hawaiian_words (1).csv", index=False, encoding="utf-8-sig")
 ```
 This reloads the csv file to update it after I added the new columns above.
+
