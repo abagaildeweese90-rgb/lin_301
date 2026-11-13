@@ -74,7 +74,6 @@ print(syllabify("strengths"))
 ```
 ```{python}
 hw_df["Syllabify_diphthongs"] = hw_df['word'].apply(syllabify_diphthongs)
-hw_df["Syllabify_diphthongs"] = hw_df["Syllabify_diphthongs"].str.join(".")
 ```
 ```{python}
 hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
