@@ -136,14 +136,43 @@ def cv_pattern(word: str):
     return "".join("V" if is_vowel(vowel) else "C" for vowel in word)
 
 def syllabify(word: str):
-    is_vowel = r"(?<=[aeiouāēīōū])"
-    syllables = re.split(is_vowel, word)
-    return [sy for sy in syllables if sy]
+    syllables = []
+    current = ""
+    for letter in word:
+        current += letter
+        if is_vowel(letter):
+            syllables.append(current)
+            current = ""
+    if current:
+        syllables.append(current)
+    return syllables
 
    
 def count_syllables(word): 
     return len(syllabify(word))
 
+
+def syllabify_diphthongs(word: str):
+    diphthongs = {"ai", "ae", "ao", "au",
+                  "ei", "eu", "oi", "ou", "iu"}
+
+    syllable_pair = []
+    current = ""
+    syllables = 0
+
+    while syllables < len(word):
+        current += word[syllables]
+        if is_vowel(word[syllables]):
+            if (syllables + 1 < len(word) and
+                word[syllables:syllables+2] in diphthongs):
+                current += word[syllables+1]
+                syllables += 1
+            syllable_pair.append(current)
+            current = ""
+        syllables += 1
+    if current:
+        syllable_pair.append(current)
+    return syllable_pair
     
     
 

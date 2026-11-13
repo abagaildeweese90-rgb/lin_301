@@ -23,10 +23,6 @@ hw_df["N_Syllables"] = hw_df['word'].apply(count_syllables)
 print(hw_df.head())
 ```
 ```{python}
-hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
-```
-
-```{python}
 total = 0
 N_Syllables = hw_df['word'].apply(syllabify)
 for w in N_Syllables:
@@ -35,7 +31,7 @@ print("The average number of syllables is:", total / len(N_Syllables))
 ```
 ```{python}
 most = hw_df["N_Syllables"].max()
-syll_max = hw_df.loc[most, "word"]
+syll_max = hw_df.loc[hw_df["N_Syllables"].idxmax(), "word"]
 print("The word with the most syllables is:", syll_max, "with", most, "syllables")
 ```
 ```{python}
@@ -57,10 +53,29 @@ else:
   print("Hawaiian words can't end in a consonant.")
 ```
 ```{python}
+
+syl_df = hw_df[["Syllables", "word"]].copy()
+syl_df["Syllables"] = syl_df["Syllables"].str.split(".")
+syl_df = syl_df.explode("Syllables")
+syl_df = syl_df.rename(columns={"word": "Word",})
+print(syl_df.head(10))
+```
+```{python}
+com = syl_df["Syllables"].value_counts().head(10)
+print("The 10 most common syllables are:", com)
+```
+```{python}
+print(cv_pattern("banana"))
+print(cv_pattern("splash")) 
+print(cv_pattern("strengths"))
+print(syllabify("banana"))
+print(syllabify("splash"))
+print(syllabify("strengths"))
+```
+```{python}
+hw_df["Syllabify_diphthongs"] = hw_df['word'].apply(syllabify_diphthongs)
+hw_df["Syllabify_diphthongs"] = hw_df["Syllabify_diphthongs"].str.join(".")
+```
+```{python}
 hw_df.to_csv("hawaiian_words.csv", index=False, encoding="utf-8-sig")
-syllables = hw_df['word'].apply(syllabify)
-rows = []
-for sy in syllables:
-  rows.append({"syllables": syllables})
-sy_df = pd.DataFrame(rows)
 ```
