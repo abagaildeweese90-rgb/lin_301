@@ -1,3 +1,4 @@
+```
 The Project Gutenberg eBook of Macbeth
     
 This eBook is for the use of anyone anywhere in the United States and
@@ -123,7 +124,7 @@ the Play, in Scotland; and chiefly at Macbeth’s Castle.
 
 
 
-ACT I
+ ACT I
 
 SCENE I. An open Place.
 
@@ -982,7 +983,7 @@ False face must hide what the false heart doth know.
 
 
 
-ACT II
+ ACT II
 
 SCENE I. Inverness. Court within the Castle.
 
@@ -1668,7 +1669,7 @@ That would make good of bad, and friends of foes!
 
 
 
-ACT III
+ ACT III
 
 SCENE I. Forres. A Room in the Palace.
 
@@ -2527,7 +2528,7 @@ I’ll send my prayers with him.
 
 
 
-ACT IV
+ ACT IV
 
 SCENE I. A dark Cave. In the middle, a Cauldron Boiling.
 
@@ -3456,7 +3457,7 @@ The night is long that never finds the day.
 
 
 
-ACT V
+ ACT V
 
 SCENE I. Dunsinane. A Room in the Castle.
 

@@ -15,23 +15,40 @@ import unicodedata
 from pypinyin import pinyin
 import pykakasi
 import spacy
-import nltk
-nltk.download("omw-2.0")
+import nltk 
 nlp_el = spacy.load("el_core_news_sm")
 nlp_fi = spacy.load("fi_core_news_sm")
-nlp_en = spacy.load("en_core_news_sm")
+nlp_en = spacy.load("en_core_web_sm")
 ```
 This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.
 ```{python}
-load_text("macbeth_en.txt")
-load_words("macbeth_en.txt")
-load_text("macbeth_fi.txt")
-load_words("macbeth_fi.txt")
-load_text("macbeth_el.txt")
-load_words("macbeth_el.txt")
+text_en = load_text("macbeth_en.txt")
+load_en = load_words("macbeth_en.txt")
+en_df = book_to_spacy_df("macbeth_en.txt", "English", nlp_en, chapter_pattern=" ACT ")
+print(en_df)
 ```
 ```{python}
-book_to_spacy_df("macbeth_en.txt", "en_df", nlp_en, chapter_word="ACT I")
-book_to_spacy_df("macbeth_fi.txt", "fi_df", nlp_fi, chapter_word="ENSIMMÄINEN NÄYTÖS.")
-book_to_spacy_df("macbeth_el.txt", "el_df", nlp_el, chapter_word="ΠΡΑΞΙΣ ΠΡΩΤΗ")
+text_fi = load_text("macbeth_fi.txt")
+load_fi = load_words("macbeth_fi.txt")
+fi_df = book_to_spacy_df("macbeth_fi.txt", "Finnish", nlp_fi, chapter_pattern="ENSIMMÄINEN")
+print(fi_df)
+```
+```{python}
+text_el = load_text("macbeth_el.txt")
+load_el = load_words("macbeth_el.txt")
+el_df = book_to_spacy_df("macbeth_el.txt", "Greek", nlp_el, chapter_pattern="ΠΡΑΞΙΣ")
+print(el_df)
+```
+```{python}
+print("Macbeth EN acts:", en_df["chapter"].nunique())
+print("Macbeth Fi acts:", fi_df["chapter"].nunique())
+print("Macbeth EL acts:", el_df["chapter"].nunique())
+```
+```{python}
+print("Macbeth EN word count:", len(load_en))
+print("Macbeth FI word count:", len(load_fi))
+print("Macbeth EL word count:", len(load_el))
+```
+```{python}
+
 ```
