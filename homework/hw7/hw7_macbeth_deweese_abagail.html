@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="f19814c8" class="cell" data-execution_count="1">
+<div id="c50c8b0c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
@@ -135,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [nltk_data]   Package omw-1.4 is already up-to-date!</code></pre>
 </div>
 </div>
-<div id="8c8e64a5" class="cell" data-execution_count="2">
+<div id="92bbbc2f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>text_en <span class="op">=</span> load_text(<span class="st">"macbeth_en.txt"</span>)</span>
@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [17668 rows x 8 columns]</code></pre>
 </div>
 </div>
-<div id="af6260ca" class="cell" data-execution_count="3">
+<div id="1bfb8fc9" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>text_fi <span class="op">=</span> load_text(<span class="st">"macbeth_fi.txt"</span>)</span>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [12111 rows x 8 columns]</code></pre>
 </div>
 </div>
-<div id="bbefa7db" class="cell" data-execution_count="4">
+<div id="d1ff6e92" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>text_el <span class="op">=</span> load_text(<span class="st">"macbeth_el.txt"</span>)</span>
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [29465 rows x 8 columns]</code></pre>
 </div>
 </div>
-<div id="868f25f4" class="cell" data-execution_count="5">
+<div id="4593dad4" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Macbeth EN acts:"</span>, en_df[<span class="st">"chapter"</span>].nunique())</span>
@@ -288,7 +288,7 @@ Macbeth Fi acts: 5
 Macbeth EL acts: 5</code></pre>
 </div>
 </div>
-<div id="4a0dfd9d" class="cell" data-execution_count="6">
+<div id="0cccfa2b" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Macbeth EN word count:"</span>, <span class="bu">len</span>(load_en))</span>
@@ -301,7 +301,7 @@ Macbeth FI word count: 13144
 Macbeth EL word count: 31274</code></pre>
 </div>
 </div>
-<div id="70f1bc42" class="cell" data-execution_count="7">
+<div id="7812a481" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fi_line <span class="op">=</span> <span class="st">"Häijy on kaunis ja kaunis on häijy"</span></span>
@@ -538,7 +538,7 @@ Macbeth EL word count: 31274</code></pre>
 </div>
 </div>
 </div>
-<div id="6fb340b0" class="cell" data-execution_count="8">
+<div id="749568bd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>category <span class="op">=</span> wn.synset(<span class="st">"body_part.n.01"</span>)</span>
@@ -567,6 +567,27 @@ Macbeth EL word count: 31274</code></pre>
 <pre><code>ENGLISH BODY PARTS: ['arm', 'back', 'ball', 'beard', 'bill', 'blade', 'body', 'bone', 'bosom', 'bottom', 'brain', 'breast', 'brow', 'cannon', 'chamber', 'cheek', 'chop', 'cistern', 'cock', 'crest', 'ear', 'eminence', 'eye', 'face', 'finger', 'flesh', 'foot', 'frame', 'gum', 'hair', 'hand', 'head', 'heart', 'heel', 'hole', 'knee', 'lap', 'leg', 'lid', 'lip', 'maw', 'middle', 'mouth', 'neck', 'nerve', 'nipple', 'nose', 'passage', 'pit', 'pot', 'rib', 'right', 'root', 'rump', 'seat', 'shaft', 'side', 'skin', 'spur', 'stick', 'tail', 'temple', 'throat', 'thumb', 'toe', 'tongue', 'tooth', 'vessel', 'wing', 'womb']
 FINNISH BODY PARTS: ['ala', 'aukko', 'jalka', 'juuri', 'kahva', 'kallo', 'kalu', 'kannus', 'kasvot', 'kaula', 'kieli', 'kita', 'korva', 'käsi', 'liha', 'luu', 'nenä', 'paalu', 'peukalo', 'piirre', 'povi', 'pää', 'rakko', 'siipi', 'silmä', 'sormi', 'suu', 'sydän', 'tie', 'tähti', 'varvas', 'vatsa', 'verkko', 'vyö']
 GREEK BODY PARTS: ['άκρα', 'αίθουσα', 'αισθήσεις', 'αυτί', 'γλώσσα', 'δόντι', 'καρδιά', 'καρπός', 'κοιλιά', 'λάρυγγας', 'μάτι', 'μέση', 'μέσος', 'ουρά', 'οφθαλμός', 'πλευρά', 'πρόσωπο', 'πόδι', 'ρώγα', 'στήθος', 'στόμα', 'σύνδεσμος', 'φύση', 'χέρι', 'χώρα', 'όργανο']</code></pre>
+</div>
+</div>
+<div id="ce1ddc44" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> synset <span class="kw">in</span> wn.synsets(<span class="st">"ball"</span>, pos<span class="op">=</span>wn.NOUN):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(synset.name(), <span class="st">"→"</span>, synset.definition())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ball.n.01 → round object that is hit or thrown or kicked in games
+musket_ball.n.01 → a solid projectile that is shot by a musket
+ball.n.03 → an object with a spherical shape
+ball.n.04 → the people assembled at a lavish formal dance
+testis.n.01 → one of the two male reproductive glands that produce spermatozoa and secrete androgens
+ball.n.06 → a spherical object used as a plaything
+ball.n.07 → United States comedienne best known as the star of a popular television program (1911-1989)
+ball.n.08 → a compact mass
+ball.n.09 → a lavish dance requiring formal attire
+ball.n.10 → a more or less rounded anatomical body or mass
+ball.n.11 → the game of baseball
+ball.n.12 → a pitch that is not in the strike zone</code></pre>
 </div>
 </div>
 

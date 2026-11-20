@@ -71,9 +71,9 @@ def analyze_line(line, nlp):
 
 print("English")
 display(analyze_line(en_line, nlp_en))
-print("FINNISH")
+print("Finish")
 display(analyze_line(fi_line, nlp_fi))
-print("GREEK")
+print("Greek")
 display(analyze_line(el_line, nlp_el))
 ```
 ```{python}
@@ -81,21 +81,21 @@ category = wn.synset("body_part.n.01")
 
 def body_part(df, lang):
     nouns = df[df["pos"] == "NOUN"]["lemma"].dropna().unique()
-
     body_parts = []
-
     for word in nouns:
         if is_a(word, category, lang):
             body_parts.append(word)
-
     return sorted(body_parts)
 
+en_parts = body_part(en_df, "eng")
+fi_parts = body_part(fi_df, "fin")
+el_parts = body_part(el_df, "ell")
 
-en_body = body_part(en_df, "eng")
-fi_body = body_part(fi_df, "fin")
-el_body = body_part(el_df, "ell")
-
-print("ENGLISH BODY PARTS:", en_body)
-print("FINNISH BODY PARTS:", fi_body)
-print("GREEK BODY PARTS:", el_body)
+print("English Body Parts:", en_parts)
+print("Finnish Body Parts:", fi_parts)
+print("Greek Body Parts:", el_parts)
+```
+```{python}
+for synset in wn.synsets("ball", pos=wn.NOUN):
+    print(synset.name(), "→", synset.definition())
 ```
