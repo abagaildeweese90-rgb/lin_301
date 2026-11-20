@@ -1,0 +1,101 @@
+```{python}
+texts = {"English": text_en, "Finnish": text_fi, "Greek": text_el}
+models = {"English": nlp_en, "Finnish": nlp_fi, "Greek": nlp_el}
+
+def normalize(text):
+    return unicodedata.normalize("NFC", text).casefold()
+    
+anchors = {
+    "English": ["Fair is foul, and foul is fair"],
+    "Finnish": ["Häijy on kaunis ja kaunis on häijy"],
+    "Greek": ["Είν' τα ωραία φρίκη, φρίκη τα καλά"]
+}
+
+def find_passage(text, language):
+    normalized_text = normalize(text)
+
+    for phrase in anchors[language]:
+        phrase = normalize(phrase)
+        position = normalized_text.find(phrase)
+
+        if position != -1:
+            # Find the sentence containing the match
+            start = max(
+                normalized_text.rfind(".", 0, position),
+                normalized_text.rfind("!", 0, position),
+                normalized_text.rfind(";", 0, position)
+            ) + 1
+
+            endings = [
+                normalized_text.find(mark, position)
+                for mark in [".", "!", "?", ";"]
+            ]
+            endings = [x for x in endings if x != -1]
+
+            end = min(endings) + 1 if endings else len(text)
+
+            # Use the same character positions because NFC preserves
+            # the character sequence for these source strings.
+            return text[start:end].strip()
+
+    return None
+
+
+# Extract and annotate the passage in all three languages
+passages = {}
+
+for language, text in texts.items():
+    passage = find_passage(text, language)
+
+    if passage is None:
+        print(f"\nCould not find the passage in {language}.")
+        print("Check the translation and update its search anchors.")
+        continue
+
+    passages[language] = passage
+
+    doc = models[language](passage)
+
+    rows = []
+
+    for token in doc:
+        if token.is_alpha:
+            rows.append({
+                "Text": token.text,
+                "Lemma": token.lemma_,
+                "POS": token.pos_,
+                "Morphology": str(token.morph)
+            })
+
+    print(f"\n{'=' * 60}")
+    print(language)
+    print("Original passage:", passage)
+    print(pd.DataFrame(rows).to_string(index=False))
+```
+```{python}
+body_part = wn.synset("body_part.n.01")
+
+languages = {
+    "English": (en_df, "eng"),
+    "Finnish": (fi_df, "fin"),
+    "Greek": (el_df, "ell")
+}
+
+body_parts = {}
+
+for language, (df, lang) in languages.items():
+
+    nouns = df.loc[df["pos"] == "NOUN", "lemma"].dropna().unique()
+
+    matches = []
+
+    for word in nouns:
+        if is_a(word, body_part, lang):
+            matches.append(word)
+
+    body_parts[language] = matches
+
+    print(f"\n{language} body-part nouns:")
+    print(sorted(matches))
+    print("Total:", len(matches))
+```

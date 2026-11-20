@@ -16,11 +16,13 @@ from pypinyin import pinyin
 import pykakasi
 import spacy
 import nltk 
+from nltk.corpus import wordnet as wn
+nltk.download("wordnet")
+nltk.download("omw-1.4")
 nlp_el = spacy.load("el_core_news_sm")
 nlp_fi = spacy.load("fi_core_news_sm")
 nlp_en = spacy.load("en_core_web_sm")
 ```
-This is me importing sys in order to import all of the functions from lin301 and then importing pandas so I can make data frames later.
 ```{python}
 text_en = load_text("macbeth_en.txt")
 load_en = load_words("macbeth_en.txt")
@@ -50,5 +52,50 @@ print("Macbeth FI word count:", len(load_fi))
 print("Macbeth EL word count:", len(load_el))
 ```
 ```{python}
+fi_line = "Häijy on kaunis ja kaunis on häijy"
+el_line = "Είν' τα ωραία φρίκη, φρίκη τα καλά"
+en_line = "Fair is foul, and foul is fair"
 
+def analyze_line(line, nlp):
+    doc = nlp(line)
+    results = []
+    for token in doc:
+        if token.is_alpha:
+            results.append({
+                "text": token.text,
+                "lemma": token.lemma_,
+                "POS": token.pos_,
+                "morphology": str(token.morph)
+            })
+    return pd.DataFrame(results)
+
+print("English")
+display(analyze_line(en_line, nlp_en))
+print("FINNISH")
+display(analyze_line(fi_line, nlp_fi))
+print("GREEK")
+display(analyze_line(el_line, nlp_el))
+```
+```{python}
+category = wn.synset("body_part.n.01")
+
+def body_part(df, lang):
+    nouns = df[df["pos"] == "NOUN"]["lemma"].dropna().unique()
+
+    body_parts = []
+
+    for word in nouns:
+        if is_a(word, category, lang):
+            body_parts.append(word)
+
+    return sorted(body_parts)
+
+
+en_body = body_part(en_df, "eng")
+fi_body = body_part(fi_df, "fin")
+el_body = body_part(el_df, "ell")
+
+print("ENGLISH BODY PARTS:", en_body)
+print("FINNISH BODY PARTS:", fi_body)
+print("GREEK BODY PARTS:", el_body)
 ```
