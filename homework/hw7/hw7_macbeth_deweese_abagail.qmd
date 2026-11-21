@@ -23,6 +23,7 @@ nlp_el = spacy.load("el_core_news_sm")
 nlp_fi = spacy.load("fi_core_news_sm")
 nlp_en = spacy.load("en_core_web_sm")
 ```
+This loads in the lin301.py file functions, all of the Unicode, Spacey, and WordNet stuff that allows me to read the diffrent translations. Abd then this loads the diffrent natrual language processers for english, finnish, and greek.
 ```{python}
 text_en = load_text("macbeth_en.txt")
 load_en = load_words("macbeth_en.txt")
@@ -41,16 +42,19 @@ load_el = load_words("macbeth_el.txt")
 el_df = book_to_spacy_df("macbeth_el.txt", "Greek", nlp_el, chapter_pattern="ΠΡΑΞΙΣ")
 print(el_df)
 ```
+This uses the load_text and load_word functions from lin_301.py to which deletes the header and footer, joins the list into a string, then splits on every word, makes all of it lower case, and clears out enpty lines. Then it creates a data frame of the text with each row a diffrent word and splits on each chapter and creates columns to identiify, the lemma, part of speech, morphology, whether its a stop word, what line its in and what chapter/act its in. This is the same for each language you just have to have to change the text files, names, nlp, and what an ACT is called in each language.
 ```{python}
 print("Macbeth EN acts:", en_df["chapter"].nunique())
 print("Macbeth Fi acts:", fi_df["chapter"].nunique())
 print("Macbeth EL acts:", el_df["chapter"].nunique())
 ```
+This checks the number of acts in each play to double check that the code above accuratly split the text into its acts by checking the chapters columns in the df's for each new number using .nunique
 ```{python}
 print("Macbeth EN word count:", len(load_en))
 print("Macbeth FI word count:", len(load_fi))
 print("Macbeth EL word count:", len(load_el))
 ```
+This identifies the word count each play by checking the length.
 ```{python}
 fi_line = "Häijy on kaunis ja kaunis on häijy"
 el_line = "Είν' τα ωραία φρίκη, φρίκη τα καλά"
@@ -60,42 +64,43 @@ def analyze_line(line, nlp):
     doc = nlp(line)
     results = []
     for token in doc:
-        if token.is_alpha:
-            results.append({
-                "text": token.text,
-                "lemma": token.lemma_,
-                "POS": token.pos_,
-                "morphology": str(token.morph)
-            })
+        results.append({
+            "text": token.text,
+            "lemma": token.lemma_,
+            "POS": token.pos_,
+            "morphology": str(token.morph)
+        })
     return pd.DataFrame(results)
 
-print("English")
 display(analyze_line(en_line, nlp_en))
-print("Finish")
 display(analyze_line(fi_line, nlp_fi))
-print("Greek")
 display(analyze_line(el_line, nlp_el))
 ```
+Code review:
+This first defines the line "fair is foul, and foul is fair" or its equivalent in each language. Then creates a new function by defining analyze lines with the inputs of which which line to analyze and which nlp to pull from. Then creates doc which finds the nlp gramatical properties for the languges and words in each line. Then you create a list called results which holds the info for the rest of the df. Then it creates a for loop that looks through each token in doc. And on each new token it .appends/adds the word, lemma, part of speech, and the morphology of each word. Then it returns a dataframe of the whats in results. Then I used an llm to figure out how to actually the data frames for each because I was using print but it said the display is what actually will show the data frame when rendered. I also had it double check my code to make sure I wasn't overlooking something.
+Section reflection:
+Each language uses a vastly diffrent make up of the parts of speech it uses to create the phrase fair is foul and foul is fair. I find it fasinating how translations are created and negotiated to have equivalent meanings but because context must be factored in the entire process is made more nuanced. The first mistake I can see is that it labels the second foul as an adjective which in this context it should be a noun. 
 ```{python}
-category = wn.synset("body_part.n.01")
+parts = wn.synset("body_part.n.01")
 
-def body_part(df, lang):
-    nouns = df[df["pos"] == "NOUN"]["lemma"].dropna().unique()
+def lang_body_part(df, lang):
+    nouns = df[df["pos"] == "NOUN"]["lemma"].unique().dropna()
     body_parts = []
     for word in nouns:
-        if is_a(word, category, lang):
+        if is_a(word, parts, lang):
             body_parts.append(word)
     return sorted(body_parts)
 
-en_parts = body_part(en_df, "eng")
-fi_parts = body_part(fi_df, "fin")
-el_parts = body_part(el_df, "ell")
+print("English:", lang_body_part(en_df, "eng"))
+print("Finnish:", lang_body_part(fi_df, "fin"))
+print("Greek:", lang_body_part(el_df, "ell"))
 
-print("English Body Parts:", en_parts)
-print("Finnish Body Parts:", fi_parts)
-print("Greek Body Parts:", el_parts)
-```
-```{python}
 for synset in wn.synsets("ball", pos=wn.NOUN):
     print(synset.name(), "→", synset.definition())
 ```
+Code review:
+First you create parts as the synset for body parts has all of the definitions for body parts in multiple languages. Now create a function that defines lang_body_parts with the inputs being the data frame you're searching and the language you are looking in. Then you makes nouns mean to check the dataframe's rows for words that are classified by nouns and then take their lemma and used .unique to only use each word once. And then I also used an llm to check my code after to make sure nothing is overlooked and it suggested .dropna which removes all missing values. Then create an empty list called body_parts to hold the rest of the functions aspects. Then you create a for loop to search for word in nouns and when you find what applys then you apply is_a function with the catagory parts from before. Then .append/add that word to the body_parts list. And then the function returns the bosy parts list sorted alphebetically. Then apply and print the function for each language dataframe. And then to check the definition of ball you create a for loop which checks synset for the term ball as a noun and then print all the synset names and all the definitions. 
+Section reflection: 
+The word ball seems to be a mistake because in context of the book its refrencing te formal event but the body parts lists because of a diffrent definition. The reason there aren't as many words in greek then finnish and english and less words in finish then in english is probably two fold: one the nlp for english is most comprhensive and so amount of definitions is probably limited making just the pool of body part words to pull from smaller, and two because this is a translation they have to make adjustments to what the orignal is saying or meaning so you won't get a one to one of the words in each play meaning of course the list will vary. 
+Overall reflection: 
+I believe the majority of hte differences come from the translator. When analysing the phrase fair is foul, and foul is fair, it was very intresting what each had been traslated into. For finnish it was "The wicked is beautiful, and the beautiful is wicked" and the greek was "The beautiful things are horror, the good things are horror". This is variation, the need for the use of determinents and the diffrence in meaning of all of these statements I feel shows how just the choices of translation cause such drastic changes. And this is shown even more by the diffrence in number of body part words in each text because with out the change of meaningf within translation there would probably far more or less body part words. This whole thing just gave me a new understanding of the phrase lost in translation.
